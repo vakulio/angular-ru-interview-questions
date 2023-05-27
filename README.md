@@ -81,7 +81,7 @@
 - [76. Жизненные циклы компонентов в Angular:](#76-жизненные-циклы-компонентов-в-angular)
 - [77. SOLID принципы в контексте Angular?](#77-solid-принципы-в-контексте-angular)
 - [78. Что такое модификатор `static`декораторa @ViewChild?](#78-что-такое-модификатор-staticдекораторa-viewchild)
-- [79. Что такое директива `ng-content` с атрибутом *select*?](#79-что-такое-директива-ng-content-с-атрибутом-select)
+- [79. Что такое директива `ng-content` с атрибутом _select_?](#79-что-такое-директива-ng-content-с-атрибутом-select)
 - [80. Методы отключения зоны (zone) и управления обнаружением изменений (change detection) в компонентах. `runOutsideAngular` и `detach` в сочетании с `reattach`.](#80-методы-отключения-зоны-zone-и-управления-обнаружением-изменений-change-detection-в-компонентах-runoutsideangular-и-detach-в-сочетании-с-reattach)
 - [81. Что такое Иерархические инжекторы (Hierarchical Injectors)?](#81-что-такое-иерархические-инжекторы-hierarchical-injectors)
 - [82. Различные типы Иерархии инжекторов в Angular?](#82-различные-типы-иерархии-инжекторов-в-angular)
@@ -92,6 +92,27 @@
 - [87. Отписки от подписок на Observable. Оператор `takeUntil` и другие способы](#87-отписки-от-подписок-на-observable-оператор-takeuntil-и-другие-способы)
 - [88. Операторы `forkJoin` vs. `merge`](#88-операторы-forkjoin-vs-merge)
 - [89. Операторы `from` и `of`](#89-операторы-from-и-of)
+- [90. Нужен ли символ \* в структурных директивах?](#90-нужен-ли-символ--в-структурных-директивах)
+- [91. Оператор `mergeMap`](#91-оператор-mergemap)
+- [92. Оператор `exhaustMap`](#92-оператор-exhaustmap)
+- [93. Оператор `switchMap`](#93-оператор-switchmap)
+- [94. Higher-Order Observable](#94-higher-order-observable)
+- [95. Оператор `distintUntillChange`](#95-оператор-distintuntillchange)
+- [96. Оператор `tap`](#96-оператор-tap)
+- [97. Service State Managment в Angular](#97-service-state-managment-в-angular)
+- [98. Zone.js в Angular](#98-zonejs-в-angular)
+- [99. Как работает Zone.js под капотом в Angular](#99-как-работает-zonejs-под-капотом-в-angular)
+- [100. Разница между Angular и React в контексте MVC (Model-View-Controller)](#100-разница-между-angular-и-react-в-контексте-mvc-model-view-controller)
+- [101. Разница между Angular и Vue](#101-разница-между-angular-и-vue)
+- [102. Оператор `concat`](#102-оператор-concat)
+- [103. Оператор `scan`](#103-оператор-scan)
+- [104. Оператор `startWith`](#104-оператор-startwith)
+- [105. Оператор `withLatestFrom`](#105-оператор-withlatestfrom)
+- [106. Оператор `ajax`](#106-оператор-ajax)
+- [107. Оператор `debounceTime`](#107-оператор-debouncetime)
+- [108. Оператор `share`](#108-оператор-share)
+- [109. Оператор `shareReplay`](#109-оператор-sharereplay)
+- [110. Оператор `bufferTime`](#110-оператор-buffertime)
 
 ## 1. Что такое Angular?
 
@@ -825,9 +846,7 @@ Angular заботится о создании экземпляра `UserService
    </app-custom-component>
    ```
 
-   В приведенном выше примере мы используем `<ng-content>` внутри компонента `app-custom-component` для встраивания внутрен
-
-него контента, который будет отображаться внутри компонента.
+   В приведенном выше примере мы используем `<ng-content>` внутри компонента `app-custom-component` для встраивания внутреннего контента, который будет отображаться внутри компонента.
 
 4. `<ng-template-outlet>`:
 
@@ -1455,9 +1474,7 @@ export class AppComponent {
 
    Метод `forChild()` также принимает конфигурацию маршрутов в качестве параметра, которую мы передаем в качестве аргумента `routes`.
 
-Итак, основное различие между методами `forRoot()` и `forChild()` заключается в их назначении. Метод `forRoot()` вызывается только в главном модуле приложения, чтобы настроить глобальную маршрутизацию, а метод `forChild()` вызывается в дочерних модулях для настройки маршрутов, специфич
-
-ных для этих модулей.
+Итак, основное различие между методами `forRoot()` и `forChild()` заключается в их назначении. Метод `forRoot()` вызывается только в главном модуле приложения, чтобы настроить глобальную маршрутизацию, а метод `forChild()` вызывается в дочерних модулях для настройки маршрутов, специфичных для этих модулей.
 
 Обратите внимание, что использование метода `forRoot()` вместо `forChild()` в дочернем модуле может привести к некорректной работе маршрутизации в приложении.
 
@@ -4860,18 +4877,18 @@ Angular proxy (или прокси Angular) - это функционально�
 
 Вот таблица, содержащая некоторые из наиболее популярных операторов RxJS, их описание и примеры:
 
-| Оператор | Описание | Примеры |
-|----------|----------|---------|
-| `map` | Преобразует значения из исходного потока в новые значения | `of(1, 2, 3).pipe(map(x => x * 2)); // Вывод: 2, 4, 6` |
-| `filter` | Фильтрует значения исходного потока на основе заданного условия | `of(1, 2, 3, 4, 5).pipe(filter(x => x % 2 === 0)); // Вывод: 2, 4` |
-| `mergeMap` (или `flatMap`) | Преобразует каждое значение исходного потока в новый поток и объединяет их в один поток | `of(1, 2, 3).pipe(mergeMap(x => of(x * 2))); // Вывод: 2, 4, 6` |
-| `switchMap` | Прекращает предыдущий поток и переключается на новый поток при каждом новом значении исходного потока | `of(1, 2, 3).pipe(switchMap(x => of(x * 2))); // Вывод: 2, 4, 6` |
-| `concatMap` | Преобразует каждое значение исходного потока в новый поток и последовательно объединяет их | `of(1, 2, 3).pipe(concatMap(x => of(x * 2))); // Вывод: 2, 4, 6` |
-| `debounceTime` | Отправляет последнее значение из исходного потока только после определенной задержки | `fromEvent(input, 'input').pipe(debounceTime(300));` |
-| `distinctUntilChanged` | Отфильтровывает повторяющиеся последовательные значения в исходном потоке | `of(1, 1, 2, 2, 3).pipe(distinctUntilChanged()); // Вывод: 1, 2, 3` |
-| `take` | Берет только определенное количество значений из исходного потока | `of(1, 2, 3, 4, 5).pipe(take(3)); // Вывод: 1, 2, 3` |
-| `combineLatest` | Комбинирует значения из нескольких потоков и выпускает новое значение при каждом изменении хотя бы одного из потоков | `combineLatest([source1$, source2$]).subscribe(([value1, value2]) => console.log(value1, value2));` |
-| `zip` | Комбинирует значения из нескольких потоков попарно и выпускает новое значение, содержащее попарно сочетающиеся значения | `zip(source1$, source2$).subscribe(([value1, value2]) => console.log(value1, value2));` |
+| Оператор                   | Описание                                                                                                                | Примеры                                                                                             |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `map`                      | Преобразует значения из исходного потока в новые значения                                                               | `of(1, 2, 3).pipe(map(x => x * 2)); // Вывод: 2, 4, 6`                                              |
+| `filter`                   | Фильтрует значения исходного потока на основе заданного условия                                                         | `of(1, 2, 3, 4, 5).pipe(filter(x => x % 2 === 0)); // Вывод: 2, 4`                                  |
+| `mergeMap` (или `flatMap`) | Преобразует каждое значение исходного потока в новый поток и объединяет их в один поток                                 | `of(1, 2, 3).pipe(mergeMap(x => of(x * 2))); // Вывод: 2, 4, 6`                                     |
+| `switchMap`                | Прекращает предыдущий поток и переключается на новый поток при каждом новом значении исходного потока                   | `of(1, 2, 3).pipe(switchMap(x => of(x * 2))); // Вывод: 2, 4, 6`                                    |
+| `concatMap`                | Преобразует каждое значение исходного потока в новый поток и последовательно объединяет их                              | `of(1, 2, 3).pipe(concatMap(x => of(x * 2))); // Вывод: 2, 4, 6`                                    |
+| `debounceTime`             | Отправляет последнее значение из исходного потока только после определенной задержки                                    | `fromEvent(input, 'input').pipe(debounceTime(300));`                                                |
+| `distinctUntilChanged`     | Отфильтровывает повторяющиеся последовательные значения в исходном потоке                                               | `of(1, 1, 2, 2, 3).pipe(distinctUntilChanged()); // Вывод: 1, 2, 3`                                 |
+| `take`                     | Берет только определенное количество значений из исходного потока                                                       | `of(1, 2, 3, 4, 5).pipe(take(3)); // Вывод: 1, 2, 3`                                                |
+| `combineLatest`            | Комбинирует значения из нескольких потоков и выпускает новое значение при каждом изменении хотя бы одного из потоков    | `combineLatest([source1$, source2$]).subscribe(([value1, value2]) => console.log(value1, value2));` |
+| `zip`                      | Комбинирует значения из нескольких потоков попарно и выпускает новое значение, содержащее попарно сочетающиеся значения | `zip(source1$, source2$).subscribe(([value1, value2]) => console.log(value1, value2));`             |
 
 Это только несколько примеров популярных операторов RxJS. В RxJS существует ещё множество других операторов, которые могут быть полезными в различных ситуациях.
 
@@ -4879,16 +4896,16 @@ Angular proxy (или прокси Angular) - это функционально�
 
 Таблица, содержащая информацию о жизненных циклах компонентов в Angular:
 
-| Жизненный цикл          | Описание                                                      | Методы                                                                                                                                                                                                                                                                  |
-|---------------------|------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `ngOnChanges`       | Вызывается, когда Angular обнаруживает изменения во входных свойствах компонента.                          | `ngOnChanges(changes: SimpleChanges) { ... }`                                                                                                                                                                                                                           |
-| `ngOnInit`          | Вызывается после установки входных свойств компонента и инициализации директив.                         | `ngOnInit() { ... }`                                                                                                                                                                                                                                                     |
-| `ngDoCheck`         | Вызывается при каждом изменении в компоненте или его дочерних компонентах.                        | `ngDoCheck() { ... }`                                                                                                                                                                                                                                                    |
-| `ngAfterContentInit` | Вызывается после того, как Angular вставляет внешний контент в представление компонента. | `ngAfterContentInit() { ... }`                                                                                                                                                                                                                                           |
-| `ngAfterContentChecked` | Вызывается после проверки содержимого компонента и его дочерних компонентов. | `ngAfterContentChecked() { ... }`                                                                                                                                                                                                                                        |
-| `ngAfterViewInit` | Вызывается после инициализации представления компонента и его дочерних представлений. | `ngAfterViewInit() { ... }`                                                                                                                                                                                                                                              |
-| `ngAfterViewChecked` | Вызывается после проверки представления компонента и его дочерних представлений. | `ngAfterViewChecked() { ... }`                                                                                                                                                                                                                                           |
-| `ngOnDestroy`       | Вызывается перед уничтожением компонента.                                                              | `ngOnDestroy() { ... }`                                                                                                                                                                                                                                                  |
+| Жизненный цикл          | Описание                                                                                 | Методы                                        |
+| ----------------------- | ---------------------------------------------------------------------------------------- | --------------------------------------------- |
+| `ngOnChanges`           | Вызывается, когда Angular обнаруживает изменения во входных свойствах компонента.        | `ngOnChanges(changes: SimpleChanges) { ... }` |
+| `ngOnInit`              | Вызывается после установки входных свойств компонента и инициализации директив.          | `ngOnInit() { ... }`                          |
+| `ngDoCheck`             | Вызывается при каждом изменении в компоненте или его дочерних компонентах.               | `ngDoCheck() { ... }`                         |
+| `ngAfterContentInit`    | Вызывается после того, как Angular вставляет внешний контент в представление компонента. | `ngAfterContentInit() { ... }`                |
+| `ngAfterContentChecked` | Вызывается после проверки содержимого компонента и его дочерних компонентов.             | `ngAfterContentChecked() { ... }`             |
+| `ngAfterViewInit`       | Вызывается после инициализации представления компонента и его дочерних представлений.    | `ngAfterViewInit() { ... }`                   |
+| `ngAfterViewChecked`    | Вызывается после проверки представления компонента и его дочерних представлений.         | `ngAfterViewChecked() { ... }`                |
+| `ngOnDestroy`           | Вызывается перед уничтожением компонента.                                                | `ngOnDestroy() { ... }`                       |
 
 Это только некоторые из методов жизненного цикла компонентов в Angular. Каждый метод выполняет определенные действия на определенном этапе жизненного цикла компонента. Вы можете использовать эти методы для выполнения специфических действий, таких как инициализация данных, подписка на Observable, очистка ресурсов и многое другое.
 
@@ -4926,37 +4943,37 @@ class EmailService {
 ```typescript
 // Плохо
 class ProductService {
-  calculateDiscount(product) {
-    if (product.price > 100) {
-      return product.price * 0.1;
-    } else {
-      return product.price * 0.05;
-    }
-  }
+	calculateDiscount(product) {
+		if (product.price > 100) {
+			return product.price * 0.1
+		} else {
+			return product.price * 0.05
+		}
+	}
 }
 
 // Хорошо
 class ProductService {
-  calculateDiscount(product) {
-    // Расчет скидки делегирован конкретным стратегиям
-    return product.discountStrategy.calculate(product.price);
-  }
+	calculateDiscount(product) {
+		// Расчет скидки делегирован конкретным стратегиям
+		return product.discountStrategy.calculate(product.price)
+	}
 }
 
 class DiscountStrategy {
-  calculate(price) { }
+	calculate(price) {}
 }
 
 class HighDiscountStrategy extends DiscountStrategy {
-  calculate(price) {
-    return price * 0.1;
-  }
+	calculate(price) {
+		return price * 0.1
+	}
 }
 
 class LowDiscountStrategy extends DiscountStrategy {
-  calculate(price) {
-    return price * 0.05;
-  }
+	calculate(price) {
+		return price * 0.05
+	}
 }
 ```
 
@@ -4966,57 +4983,57 @@ class LowDiscountStrategy extends DiscountStrategy {
 ```typescript
 // Плохо
 class Rectangle {
-  constructor(public width: number, public height: number) { }
+	constructor(public width: number, public height: number) {}
 
-  setWidth(width: number) {
-    this.width = width;
-  }
+	setWidth(width: number) {
+		this.width = width
+	}
 
-  setHeight(height: number) {
-    this.height = height;
-  }
+	setHeight(height: number) {
+		this.height = height
+	}
 }
 
 class Square extends Rectangle {
-  setWidth(width: number) {
-    this.width = width;
-    this.height = width;
-  }
+	setWidth(width: number) {
+		this.width = width
+		this.height = width
+	}
 
-  setHeight(height: number) {
-    this.width = height;
-    this.height = height;
-  }
+	setHeight(height: number) {
+		this.width = height
+		this.height = height
+	}
 }
 
 // Хорошо
 interface Shape {
-  setWidth(width: number): void;
-  setHeight(height: number): void;
+	setWidth(width: number): void
+	setHeight(height: number): void
 }
 
 class Rectangle implements Shape {
-  constructor(public width: number, public height: number) { }
+	constructor(public width: number, public height: number) {}
 
-  setWidth(width: number) {
-    this.width = width;
-  }
+	setWidth(width: number) {
+		this.width = width
+	}
 
-  setHeight(height: number) {
-    this.height = height;
-  }
+	setHeight(height: number) {
+		this.height = height
+	}
 }
 
 class Square implements Shape {
-  constructor(public sideLength: number) { }
+	constructor(public sideLength: number) {}
 
-  setWidth(width: number) {
-    this.sideLength = width;
-  }
+	setWidth(width: number) {
+		this.sideLength = width
+	}
 
-  setHeight(height: number) {
-    this.sideLength = height;
-  }
+	setHeight(height: number) {
+		this.sideLength = height
+	}
 }
 ```
 
@@ -5026,41 +5043,41 @@ class Square implements Shape {
 ```typescript
 // Плохо
 interface CRUDService {
-  create(data: any): void;
-  read(id: number): any;
-  update(id: number, data: any): void;
-  delete(id: number): void;
+	create(data: any): void
+	read(id: number): any
+	update(id: number, data: any): void
+	delete(id: number): void
 }
 
 class ProductService implements CRUDService {
-  create(data: any) { }
-  read(id: number) { }
-  update(id: number, data: any) { }
-  delete(id: number) { }
+	create(data: any) {}
+	read(id: number) {}
+	update(id: number, data: any) {}
+	delete(id: number) {}
 }
 
 // Хорошо
 interface CreateService {
-  create(data: any): void;
+	create(data: any): void
 }
 
 interface ReadService {
-  read(id: number): any;
+	read(id: number): any
 }
 
 interface UpdateService {
-  update(id: number, data: any): void;
+	update(id: number, data: any): void
 }
 
 interface DeleteService {
-  delete(id: number): void;
+	delete(id: number): void
 }
 
 class ProductService implements CreateService, ReadService, UpdateService, DeleteService {
-  create(data: any) { }
-  read(id: number) { }
-  update(id: number, data: any) { }
-  delete(id: number) { }
+	create(data: any) {}
+	read(id: number) {}
+	update(id: number, data: any) {}
+	delete(id: number) {}
 }
 ```
 
@@ -5070,24 +5087,24 @@ class ProductService implements CreateService, ReadService, UpdateService, Delet
 ```typescript
 // Плохо
 class OrderService {
-  private httpClient: HttpClient;
+	private httpClient: HttpClient
 
-  constructor() {
-    this.httpClient = new HttpClient();
-  }
+	constructor() {
+		this.httpClient = new HttpClient()
+	}
 
-  getOrder(id: number) {
-    return this.httpClient.get('/orders/' + id);
-  }
+	getOrder(id: number) {
+		return this.httpClient.get('/orders/' + id)
+	}
 }
 
 // Хорошо
 class OrderService {
-  constructor(private httpClient: HttpClient) { }
+	constructor(private httpClient: HttpClient) {}
 
-  getOrder(id: number) {
-    return this.httpClient.get('/orders/' + id);
-  }
+	getOrder(id: number) {
+		return this.httpClient.get('/orders/' + id)
+	}
 }
 ```
 
@@ -5102,19 +5119,19 @@ class OrderService {
 Давайте рассмотрим пример. Предположим, у нас есть компонент `ChildComponent`, в котором мы хотим получить доступ к элементу с идентификатором `myElement` сразу после создания компонента:
 
 ```typescript
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core'
 
 @Component({
-  selector: 'app-child',
-  template: '<div id="myElement">Это элемент, к которому мы хотим получить доступ</div>'
+	selector: 'app-child',
+	template: '<div id="myElement">Это элемент, к которому мы хотим получить доступ</div>'
 })
 export class ChildComponent implements AfterViewInit {
-  @ViewChild('myElement', { static: true }) myElement: ElementRef;
+	@ViewChild('myElement', { static: true }) myElement: ElementRef
 
-  ngAfterViewInit() {
-    // Мы можем получить доступ к элементу уже внутри ngAfterViewInit
-    console.log(this.myElement.nativeElement);
-  }
+	ngAfterViewInit() {
+		// Мы можем получить доступ к элементу уже внутри ngAfterViewInit
+		console.log(this.myElement.nativeElement)
+	}
 }
 ```
 
@@ -5122,7 +5139,7 @@ export class ChildComponent implements AfterViewInit {
 
 Обратите внимание, что использование `static: true` также означает, что мы не сможем получить доступ к свойству `myElement` до инициализации компонента. Поэтому убедитесь, что вы используете `@ViewChild` со статическим модификатором только в тех случаях, когда это действительно необходимо и вы понимаете последствия такого использования.
 
-## 79. Что такое директива `ng-content` с атрибутом *select*?
+## 79. Что такое директива `ng-content` с атрибутом _select_?
 
 Директива `ng-content` в Angular позволяет нам передавать контент внутрь компонента извне. Мы можем использовать директиву `ng-content` с атрибутом `select`, чтобы выбирать только определенные элементы контента для вставки внутрь компонента.
 
@@ -5131,8 +5148,8 @@ export class ChildComponent implements AfterViewInit {
 ```html
 <!-- parent.component.html -->
 <div>
-  <h1>Родительский компонент</h1>
-  <ng-content select=".my-class"></ng-content>
+	<h1>Родительский компонент</h1>
+	<ng-content select=".my-class"></ng-content>
 </div>
 ```
 
@@ -5141,10 +5158,10 @@ export class ChildComponent implements AfterViewInit {
 ```html
 <!-- child.component.html -->
 <div>
-  <h2>Дочерний компонент</h2>
-  <div class="my-class">Это элемент с классом my-class</div>
-  <p>Это обычный элемент</p>
-  <div class="my-class">Еще один элемент с классом my-class</div>
+	<h2>Дочерний компонент</h2>
+	<div class="my-class">Это элемент с классом my-class</div>
+	<p>Это обычный элемент</p>
+	<div class="my-class">Еще один элемент с классом my-class</div>
 </div>
 ```
 
@@ -5153,9 +5170,9 @@ export class ChildComponent implements AfterViewInit {
 ```html
 <!-- app.component.html -->
 <app-parent>
-  <app-child>
-    <!-- Все элементы с классом my-class будут вставлены в ng-content родительского компонента -->
-  </app-child>
+	<app-child>
+		<!-- Все элементы с классом my-class будут вставлены в ng-content родительского компонента -->
+	</app-child>
 </app-parent>
 ```
 
@@ -5172,24 +5189,22 @@ export class ChildComponent implements AfterViewInit {
 Вот пример использования `runOutsideAngular`:
 
 ```typescript
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone } from '@angular/core'
 
 @Component({
-  selector: 'app-example',
-  template: `
-    <button (click)="runOutsideZone()">Выполнить за пределами зоны</button>
-  `,
+	selector: 'app-example',
+	template: ` <button (click)="runOutsideZone()">Выполнить за пределами зоны</button> `
 })
 export class ExampleComponent {
-  constructor(private ngZone: NgZone) {}
+	constructor(private ngZone: NgZone) {}
 
-  runOutsideZone() {
-    this.ngZone.runOutsideAngular(() => {
-      // Код, который будет выполнен за пределами зоны Angular
-      // Изменения не будут обнаруживаться и применяться автоматически
-      // ...
-    });
-  }
+	runOutsideZone() {
+		this.ngZone.runOutsideAngular(() => {
+			// Код, который будет выполнен за пределами зоны Angular
+			// Изменения не будут обнаруживаться и применяться автоматически
+			// ...
+		})
+	}
 }
 ```
 
@@ -5200,28 +5215,26 @@ export class ExampleComponent {
 Вот пример использования `detach` и `reattach`:
 
 ```typescript
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core'
 
 @Component({
-  selector: 'app-example',
-  template: `
-    <button (click)="toggleDetection()">Переключить обнаружение изменений</button>
-  `,
+	selector: 'app-example',
+	template: ` <button (click)="toggleDetection()">Переключить обнаружение изменений</button> `
 })
 export class ExampleComponent {
-  private detached = false;
+	private detached = false
 
-  constructor(private cdr: ChangeDetectorRef) {}
+	constructor(private cdr: ChangeDetectorRef) {}
 
-  toggleDetection() {
-    if (this.detached) {
-      this.cdr.reattach(); // Восстановление обнаружения изменений
-      this.detached = false;
-    } else {
-      this.cdr.detach(); // Отключение обнаружения изменений
-      this.detached = true;
-    }
-  }
+	toggleDetection() {
+		if (this.detached) {
+			this.cdr.reattach() // Восстановление обнаружения изменений
+			this.detached = false
+		} else {
+			this.cdr.detach() // Отключение обнаружения изменений
+			this.detached = true
+		}
+	}
 }
 ```
 
@@ -5240,45 +5253,43 @@ export class ExampleComponent {
 У нас есть компоненты `AppComponent` и `ChildComponent`, где `ChildComponent` является дочерним компонентом `AppComponent`.
 
 ```typescript
-import { Component, Injectable, Injector } from '@angular/core';
+import { Component, Injectable, Injector } from '@angular/core'
 
 @Injectable()
 class DataService {
-  getData(): string {
-    return 'Данные из DataService';
-  }
+	getData(): string {
+		return 'Данные из DataService'
+	}
 }
 
 @Component({
-  selector: 'app-child',
-  template: `
-    <p>{{ data }}</p>
-  `,
-  providers: [DataService]
+	selector: 'app-child',
+	template: ` <p>{{ data }}</p> `,
+	providers: [DataService]
 })
 class ChildComponent {
-  constructor(private dataService: DataService) {}
+	constructor(private dataService: DataService) {}
 
-  get data(): string {
-    return this.dataService.getData();
-  }
+	get data(): string {
+		return this.dataService.getData()
+	}
 }
 
 @Component({
-  selector: 'app-root',
-  template: `
-    <h1>Родительский компонент</h1>
-    <app-child></app-child>
-  `,
-  providers: [DataService]
+	selector: 'app-root',
+	template: `
+		<h1>Родительский компонент</h1>
+		<app-child></app-child>
+	`,
+	providers: [DataService]
 })
 class AppComponent {}
 
 // Создаем инжектор и создаем экземпляр AppComponent
-const injector = Injector.create({ providers: [], parent: null });
-const appComponent = injector.get(AppComponent);
+const injector = Injector.create({ providers: [], parent: null })
+const appComponent = injector.get(AppComponent)
 
-console.log(appComponent.data); // Выведет: "Данные из DataService"
+console.log(appComponent.data) // Выведет: "Данные из DataService"
 ```
 
 В этом примере у нас есть `DataService`, который предоставляет данные, и два компонента: `AppComponent` и `ChildComponent`. Оба компонента используют `DataService` в качестве зависимости.
@@ -5305,52 +5316,46 @@ console.log(appComponent.data); // Выведет: "Данные из DataServic
 Вот пример, демонстрирующий использование иерархии инжекторов на основе компонентов:
 
 ```typescript
-import { Component, Injectable, Injector } from '@angular/core';
+import { Component, Injectable, Injector } from '@angular/core'
 
 @Injectable()
 class DataService {
-  getData(): string {
-    return 'Данные из DataService';
-  }
+	getData(): string {
+		return 'Данные из DataService'
+	}
 }
 
 @Component({
-  selector: 'app-child',
-  template: `
-    <p>{{ data }}</p>
-  `,
-  providers: [DataService]
+	selector: 'app-child',
+	template: ` <p>{{ data }}</p> `,
+	providers: [DataService]
 })
 class ChildComponent {
-  constructor(private dataService: DataService) {}
+	constructor(private dataService: DataService) {}
 
-  get data(): string {
-    return this.dataService.getData();
-  }
+	get data(): string {
+		return this.dataService.getData()
+	}
 }
 
 @Component({
-  selector: 'app-root',
-  template: `
-    <h1>Родительский компонент</h1>
-    <app-child
-
-></app-child>
-  `,
-  providers: [DataService]
+	selector: 'app-root',
+	template: `
+		<h1>Родительский компонент</h1>
+		<app-child></app-child>
+	`,
+	providers: [DataService]
 })
 class ParentComponent {
-  constructor(private injector: Injector) {
-    const childInjector = Injector.create({
-      parent: this.injector,
-      providers: [
-        { provide: DataService, useValue: { getData: () => 'Данные из дочернего компонента' } }
-      ]
-    });
+	constructor(private injector: Injector) {
+		const childInjector = Injector.create({
+			parent: this.injector,
+			providers: [{ provide: DataService, useValue: { getData: () => 'Данные из дочернего компонента' } }]
+		})
 
-    const childComponent = childInjector.get(ChildComponent);
-    console.log(childComponent.data); // Выведет 'Данные из дочернего компонента'
-  }
+		const childComponent = childInjector.get(ChildComponent)
+		console.log(childComponent.data) // Выведет 'Данные из дочернего компонента'
+	}
 }
 ```
 
@@ -5370,20 +5375,19 @@ Resolution modifiers (модификаторы разрешения) в Angular 
    Модификатор `@Self()` указывает Angular использовать только ту зависимость, которая является непосредственно связанной с элементом, в котором происходит инъекция. Если зависимость не может быть найдена в текущем элементе, Angular выдаст ошибку `NullInjectorError`. Это полезно, когда требуется получить только зависимость, которая явно определена в текущем элементе.
 
 Пример использования `@Self()`:
+
 ```typescript
-import { Component, Self } from '@angular/core';
+import { Component, Self } from '@angular/core'
 
 class DataService {}
 
 @Component({
-  selector: 'app-child',
-  template: `
-    <p>{{ data }}</p>
-  `,
-  providers: [DataService]
+	selector: 'app-child',
+	template: ` <p>{{ data }}</p> `,
+	providers: [DataService]
 })
 class ChildComponent {
-  constructor(@Self() private dataService: DataService) {}
+	constructor(@Self() private dataService: DataService) {}
 }
 ```
 
@@ -5391,23 +5395,22 @@ class ChildComponent {
    Модификатор `@Optional()` указывает Angular не генерировать ошибку, если зависимость не может быть найдена. Вместо этого, в случае отсутствия зависимости, будет использовано значение по умолчанию (`null`). Это полезно, когда зависимость может быть опциональной и ее отсутствие не должно вызывать ошибку.
 
 Пример использования `@Optional()`:
+
 ```typescript
-import { Component, Optional } from '@angular/core';
+import { Component, Optional } from '@angular/core'
 
 class LoggerService {}
 
 @Component({
-  selector: 'app-child',
-  template: `
-    <p>{{ log }}</p>
-  `
+	selector: 'app-child',
+	template: ` <p>{{ log }}</p> `
 })
 class ChildComponent {
-  constructor(@Optional() private logger: LoggerService) {
-    if (this.logger) {
-      this.logger.log('Some log message');
-    }
-  }
+	constructor(@Optional() private logger: LoggerService) {
+		if (this.logger) {
+			this.logger.log('Some log message')
+		}
+	}
 }
 ```
 
@@ -5415,27 +5418,24 @@ class ChildComponent {
    Модификатор `@SkipSelf()` указывает Angular пропустить текущий элемент и искать зависимость в родительских элементах. Это полезно, когда требуется обойти текущий элемент и получить зависимость из более высокого уровня иерархии.
 
 Пример использования `@SkipSelf()`:
+
 ```typescript
-import { Component, SkipSelf, Injector } from '@angular/core';
+import { Component, SkipSelf, Injector } from '@angular/core'
 
 class ConfigService {}
 
 @Component({
-  selector: 'app-child',
-  template: `
-    <p>{{ config }}</p>
-  `,
-  providers: [ConfigService]
+	selector: 'app-child',
+	template: ` <p>{{ config }}</p> `,
+	providers: [ConfigService]
 })
 class ChildComponent {
-  constructor(@SkipSelf() private configService: ConfigService, private injector: Injector) {
-    const parentConfigService = this.injector.get(ConfigService);
-    console.log(parentConfigService === this.configService); // Выведет true
-  }
+	constructor(@SkipSelf() private configService: ConfigService, private injector: Injector) {
+		const parentConfigService = this.injector.get(ConfigService)
+		console.log(parentConfigService === this.configService) // Выведет true
+	}
 }
 ```
-
-
 
 Комбинируя эти модификаторы разрешения, можно точно настраивать инъекцию зависимостей в Angular и контролировать область видимости и доступность этих зависимостей в приложении.
 
@@ -5452,39 +5452,39 @@ Injector trees (деревья инжекторов) в Angular представ
 Пример использования дерева инжекторов:
 
 1. Создание сервиса и его регистрация в модуле:
+
 ```typescript
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 
 @Injectable()
 class DataService {
-  getData(): string {
-    return 'Data from DataService';
-  }
+	getData(): string {
+		return 'Data from DataService'
+	}
 }
 
 @NgModule({
-  providers: [DataService]
+	providers: [DataService]
 })
 class AppModule {}
 ```
 
 2. Инъекция зависимости в компонент:
+
 ```typescript
-import { Component } from '@angular/core';
-import { DataService } from './data.service';
+import { Component } from '@angular/core'
+import { DataService } from './data.service'
 
 @Component({
-  selector: 'app-root',
-  template: `
-    <h1>{{ data }}</h1>
-  `
+	selector: 'app-root',
+	template: ` <h1>{{ data }}</h1> `
 })
 class AppComponent {
-  constructor(private dataService: DataService) {}
+	constructor(private dataService: DataService) {}
 
-  ngOnInit() {
-    this.data = this.dataService.getData();
-  }
+	ngOnInit() {
+		this.data = this.dataService.getData()
+	}
 }
 ```
 
@@ -5500,26 +5500,27 @@ markForCheck и detectChanges - это два метода из ChangeDetectorRe
    Метод markForCheck помечает компонент и его дочерние компоненты для проверки изменений при следующей проверке цикла обнаружения изменений. Это означает, что Angular будет перепроверять компонент и его дочерние компоненты, чтобы обнаружить и применить любые изменения данных, которые могли произойти. Однако сама проверка изменений не происходит немедленно после вызова markForCheck. Вместо этого Angular отложит проверку до ближайшего цикла обнаружения изменений.
 
    Пример использования markForCheck:
+
    ```typescript
-   import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+   import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
 
    @Component({
-     selector: 'app-example',
-     template: `
-       <h1>{{ data }}</h1>
-       <button (click)="updateData()">Update Data</button>
-     `,
-     changeDetection: ChangeDetectionStrategy.OnPush
+   	selector: 'app-example',
+   	template: `
+   		<h1>{{ data }}</h1>
+   		<button (click)="updateData()">Update Data</button>
+   	`,
+   	changeDetection: ChangeDetectionStrategy.OnPush
    })
    export class ExampleComponent {
-     data: string;
+   	data: string
 
-     constructor(private cdr: ChangeDetectorRef) {}
+   	constructor(private cdr: ChangeDetectorRef) {}
 
-     updateData() {
-       this.data = 'Updated Data';
-       this.cdr.markForCheck();
-     }
+   	updateData() {
+   		this.data = 'Updated Data'
+   		this.cdr.markForCheck()
+   	}
    }
    ```
 
@@ -5529,25 +5530,26 @@ markForCheck и detectChanges - это два метода из ChangeDetectorRe
    Метод detectChanges явно запускает проверку изменений и обновление представления компонента в текущем цикле обнаружения изменений. Он принудительно применяет любые изменения данных в компоненте и его дочерних компонентах без ожидания следующего цикла обнаружения изменений. Это может быть полезно, если вы хотите обновить представление компонента немедленно, например, в ответ на асинхронные события.
 
    Пример использования detectChanges:
+
    ```typescript
-   import { Component, ChangeDetectorRef } from '@angular/core';
+   import { Component, ChangeDetectorRef } from '@angular/core'
 
    @Component({
-     selector: 'app-example',
-     template: `
-       <h1>{{ data }}</h1>
-       <button (click)="updateData()">Update Data</button>
-     `
+   	selector: 'app-example',
+   	template: `
+   		<h1>{{ data }}</h1>
+   		<button (click)="updateData()">Update Data</button>
+   	`
    })
    export class ExampleComponent {
-     data: string;
+   	data: string
 
-     constructor(private cdr: ChangeDetectorRef) {}
+   	constructor(private cdr: ChangeDetectorRef) {}
 
-     updateData() {
-       this.data = 'Updated Data';
-       this.cdr.detectChanges();
-     }
+   	updateData() {
+   		this.data = 'Updated Data'
+   		this.cdr.detectChanges()
+   	}
    }
    ```
 
@@ -5564,10 +5566,12 @@ Angular поддерживает tree shaking по умолчанию благо
 Однако не все зависимости могут быть подвержены tree shaking. Некоторые зависимости могут содержать код, который не может быть удален из-за своей природы. Вот несколько примеров tree-shakable и non-tree-shakable зависимостей в Angular:
 
 Tree-shakable зависимости:
+
 - Angular Core: Angular Framework является tree-shakable, что означает, что только используемые части Angular Core будут включены в финальный бандл.
 - RxJS: RxJS также поддерживает tree shaking. Только используемые операторы и функции будут включены в финальный бандл.
 
 Non-tree-shakable зависимости:
+
 - Third-party библиотеки без поддержки tree shaking: Некоторые сторонние библиотеки могут быть не оптимизированы для tree shaking и будут включать весь свой код в финальный бандл, даже если вы используете только небольшую часть функциональности.
 - ES6 модули: ES6 модули обычно не подвержены tree shaking, поскольку они обеспечивают статическую структуру импорта и экспорта, и все зависимости могут быть обязаны быть включенными в финальный бандл.
 
@@ -5583,15 +5587,15 @@ Tree shaking - это мощный инструмент оптимизации �
 Для начала создадим экземпляр `Subject`, который будет использоваться для отслеживания состояния отписки. Мы можем разместить его внутри компонента или сервиса:
 
 ```typescript
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs'
 
 @Component({
-  // ...
+	// ...
 })
 export class MyComponent implements OnInit, OnDestroy {
-  private unsubscribe$ = new Subject<void>();
+	private unsubscribe$ = new Subject<void>()
 
-  // ...
+	// ...
 }
 ```
 
@@ -5599,34 +5603,34 @@ export class MyComponent implements OnInit, OnDestroy {
 Теперь мы можем использовать оператор `takeUntil` для автоматической отписки от подписок на Observable, когда `unsubscribe$` будет запущен.
 
 ```typescript
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators'
 
 @Component({
-  // ...
+	// ...
 })
 export class MyComponent implements OnInit, OnDestroy {
-  private unsubscribe$ = new Subject<void>();
+	private unsubscribe$ = new Subject<void>()
 
-  ngOnInit() {
-    someObservable$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((data) => {
-        // Обработка полученных данных
-      });
-  }
+	ngOnInit() {
+		someObservable$.pipe(takeUntil(this.unsubscribe$)).subscribe((data) => {
+			// Обработка полученных данных
+		})
+	}
 
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
+	ngOnDestroy() {
+		this.unsubscribe$.next()
+		this.unsubscribe$.complete()
+	}
 }
 ```
 
 Как это работает:
+
 - При инициализации компонента мы создаем подписку на `someObservable$` с использованием оператора `takeUntil(this.unsubscribe$)`. Это означает, что подписка будет активна до тех пор, пока `unsubscribe$` не выдаст сигнал.
 - Когда компонент уничтожается (`ngOnDestroy`), мы вызываем `next()` для отправки сигнала отписки и `complete()` для завершения `unsubscribe$`. Это позволяет завершить подписку и предотвратить утечки памяти.
 
 При использовании оператора `takeUntil` важно помнить о следующих моментах:
+
 - `takeUntil` отменяет подписку на Observable, когда его источник или `unsubscribe$` отправляет сигнал `next()`.
 - Вы можете использовать `unsubscribe$` в нескольких подписках, чтобы одновременно отписаться от нескольких Observable.
 - Убедитесь, что вызываете как `next()`, так и `complete()` в `ngOnDestroy`, чтобы гарантировать полную отписку и избежать утечек памяти.
@@ -5639,23 +5643,23 @@ export class MyComponent implements OnInit, OnDestroy {
    Когда вы создаете подписку на Observable, вы получаете ссылку на объект Subscription. Вы можете использовать метод `unsubscribe()` для явной отписки от подписки:
 
    ```typescript
-   import { Subscription } from 'rxjs';
+   import { Subscription } from 'rxjs'
 
    @Component({
-     // ...
+   	// ...
    })
    export class MyComponent implements OnInit, OnDestroy {
-     private subscription: Subscription;
+   	private subscription: Subscription
 
-     ngOnInit() {
-       this.subscription = someObservable$.subscribe((data) => {
-         // Обработка полученных данных
-       });
-     }
+   	ngOnInit() {
+   		this.subscription = someObservable$.subscribe((data) => {
+   			// Обработка полученных данных
+   		})
+   	}
 
-     ngOnDestroy() {
-       this.subscription.unsubscribe();
-     }
+   	ngOnDestroy() {
+   		this.subscription.unsubscribe()
+   	}
    }
    ```
 
@@ -5666,17 +5670,15 @@ export class MyComponent implements OnInit, OnDestroy {
 
    ```typescript
    @Component({
-     // ...
-     template: `
-       <div>{{ data$ | async }}</div>
-     `
+   	// ...
+   	template: ` <div>{{ data$ | async }}</div> `
    })
    export class MyComponent {
-     data$: Observable<any>;
+   	data$: Observable<any>
 
-     ngOnInit() {
-       this.data$ = someObservable$;
-     }
+   	ngOnInit() {
+   		this.data$ = someObservable$
+   	}
    }
    ```
 
@@ -5686,19 +5688,17 @@ export class MyComponent implements OnInit, OnDestroy {
    Если вам не требуется дальнейшая подписка после получения первого значения, вы можете использовать операторы `first` или `take(1)`, чтобы ограничить подписку одним значением:
 
    ```typescript
-   import { first } from 'rxjs/operators';
+   import { first } from 'rxjs/operators'
 
    @Component({
-     // ...
+   	// ...
    })
    export class MyComponent implements OnInit {
-     ngOnInit() {
-       someObservable$
-         .pipe(first())
-         .subscribe((data) => {
-           // Обработка полученных данных
-         });
-     }
+   	ngOnInit() {
+   		someObservable$.pipe(first()).subscribe((data) => {
+   			// Обработка полученных данных
+   		})
+   	}
    }
    ```
 
@@ -5716,14 +5716,14 @@ export class MyComponent implements OnInit, OnDestroy {
 Вот пример кода, демонстрирующий использование `forkJoin`:
 
 ```typescript
-import { forkJoin, of } from 'rxjs';
+import { forkJoin, of } from 'rxjs'
 
-const observable1 = of('Hello');
-const observable2 = of('World');
+const observable1 = of('Hello')
+const observable2 = of('World')
 
 forkJoin([observable1, observable2]).subscribe(([result1, result2]) => {
-  console.log(result1 + ' ' + result2);
-});
+	console.log(result1 + ' ' + result2)
+})
 ```
 
 В этом примере мы создаем два наблюдаемых `observable1` и `observable2`, которые излучают значения 'Hello' и 'World'. Затем мы используем `forkJoin`, передавая ему массив этих наблюдаемых. Когда оба наблюдаемых завершаются, мы получаем результаты в виде массива `[result1, result2]` и выводим их в консоль.
@@ -5734,14 +5734,14 @@ forkJoin([observable1, observable2]).subscribe(([result1, result2]) => {
 Вот пример кода, демонстрирующий использование `merge`:
 
 ```typescript
-import { merge, of } from 'rxjs';
+import { merge, of } from 'rxjs'
 
-const observable1 = of('Hello');
-const observable2 = of('World');
+const observable1 = of('Hello')
+const observable2 = of('World')
 
-merge(observable1, observable2).subscribe(result => {
-  console.log(result);
-});
+merge(observable1, observable2).subscribe((result) => {
+	console.log(result)
+})
 ```
 
 В этом примере мы создаем два наблюдаемых `observable1` и `observable2`, которые излучают значения 'Hello' и 'World'. Затем мы используем `merge`, передавая ему эти наблюдаемые отдельно. Результаты излучаемых значений объединяются и выводятся в консоль.
@@ -5763,32 +5763,32 @@ merge(observable1, observable2).subscribe(result => {
 Вот примеры кода, демонстрирующие использование `from`:
 
 ```typescript
-import { from, of } from 'rxjs';
+import { from, of } from 'rxjs'
 
 // Преобразование массива в наблюдаемую последовательность
-const array = [1, 2, 3];
-const arrayObservable = from(array);
-arrayObservable.subscribe(value => {
-  console.log(value);
-});
+const array = [1, 2, 3]
+const arrayObservable = from(array)
+arrayObservable.subscribe((value) => {
+	console.log(value)
+})
 
 // Преобразование строки в наблюдаемую последовательность
-const string = 'Hello';
-const stringObservable = from(string);
-stringObservable.subscribe(value => {
-  console.log(value);
-});
+const string = 'Hello'
+const stringObservable = from(string)
+stringObservable.subscribe((value) => {
+	console.log(value)
+})
 
 // Преобразование обещания в наблюдаемую последовательность
-const promise = new Promise(resolve => {
-  setTimeout(() => {
-    resolve('Resolved!');
-  }, 2000);
-});
-const promiseObservable = from(promise);
-promiseObservable.subscribe(value => {
-  console.log(value);
-});
+const promise = new Promise((resolve) => {
+	setTimeout(() => {
+		resolve('Resolved!')
+	}, 2000)
+})
+const promiseObservable = from(promise)
+promiseObservable.subscribe((value) => {
+	console.log(value)
+})
 ```
 
 В первом примере мы преобразуем массив `[1, 2, 3]` в наблюдаемую последовательность с помощью `from`. Затем мы подписываемся на эту последовательность и выводим значения в консоль.
@@ -5803,14 +5803,1034 @@ promiseObservable.subscribe(value => {
 Вот пример кода, демонстрирующий использование `of`:
 
 ```typescript
-import { of } from 'rxjs';
+import { of } from 'rxjs'
 
-const observable = of(1, 2, 3);
-observable.subscribe(value => {
-  console.log(value);
-});
+const observable = of(1, 2, 3)
+observable.subscribe((value) => {
+	console.log(value)
+})
 ```
 
 В этом примере мы создаем наблюдаемую последовательность с помощью `of` и передаем в него значения `1`, `2` и `3`. Затем мы подписываемся на эту последовательность и выводим значения в консоль.
 
 Основное отличие между `from` и `of` заключается в том, что `from` используется для преобразования различных источников данных в наблюдаемую последовательность, в то время как `of` используется для создания наблюдаемой последовательности с заданными значениями.
+
+## 90. Нужен ли символ * в структурных директивах?
+
+Символ `*` в структурных директивах является синтаксическим сахаром, предоставляемым Angular, и используется для более удобного и читабельного написания кода. Он помогает упростить создание и использование шаблонов в Angular.
+
+Давайте рассмотрим подробнее, почему символ `*` используется в структурных директивах, и как он работает.
+
+Структурные директивы в Angular позволяют манипулировать структурой DOM, добавлять или удалять элементы в зависимости от определенных условий. Некоторые из структурных директив включают `ngIf`, `ngFor` и `ngSwitch`.
+
+Символ `*` используется для обозначения шаблона, который будет применен к элементу или контейнеру. Он является сокращением для создания и использования `ng-template`, который является специальным элементом, определяющим фрагмент шаблона.
+
+Давайте рассмотрим пример использования символа `*` в структурной директиве `ngIf`:
+
+```html
+<div *ngIf="condition">
+  Содержимое, отображаемое при выполнении условия
+</div>
+```
+
+В этом примере, блок `<div>` будет отображаться только в том случае, если `condition` будет истинным. Символ `*` перед директивой `ngIf` указывает Angular, что это структурная директива и должен быть применен шаблон.
+
+Под капотом Angular преобразует этот код в следующую конструкцию:
+
+```html
+<ng-template [ngIf]="condition">
+  <div>
+    Содержимое, отображаемое при выполнении условия
+  </div>
+</ng-template>
+```
+
+Angular создает `ng-template`, внутри которого содержится фрагмент шаблона, который будет отображаться при выполнении условия.
+
+Использование символа `*` в структурных директивах делает код более читабельным и понятным. Он также помогает избежать создания лишних оберточных элементов в DOM.
+
+Важно отметить, что символ `*` является частью синтаксиса Angular и имеет определенные правила использования. Он может использоваться только с определенными структурными директивами, и его нельзя использовать вместе с другими атрибутами или директивами.
+
+В заключение, символ `*` в структурных директивах Angular предоставляет удобный способ определения шаблонов и улучшает читабельность кода. Он является синтаксическим сахаром, который упрощает использование структурных директив и способствует более элегантному написанию кода в Angular.
+
+## 91. Оператор `mergeMap` 
+
+`mergeMap` - это оператор высшего порядка (Higher-Order Observable) в RxJS, который используется для преобразования элементов одного потока данных (Observable) в другой поток данных. Он применяет функцию к каждому элементу и возвращает новый Observable, который объединяет (merge) результаты всех внутренних Observable в один поток.
+
+Давайте разберемся с примером кода и объясним каждую деталь:
+
+```typescript
+import { of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+
+// Исходный поток данных
+const source$ = of(1, 2, 3);
+
+// Функция-преобразователь, принимающая элементы и возвращающая внутренний Observable
+const transform = (value: number) => {
+  // Создаем внутренний Observable
+  const inner$ = of(value * 2);
+  return inner$;
+};
+
+// Применяем mergeMap для каждого элемента и объединяем результаты в один поток
+const result$ = source$.pipe(
+  mergeMap(transform)
+);
+
+// Подписываемся на результат
+result$.subscribe(result => console.log(result));
+```
+
+В этом примере у нас есть исходный поток данных `source$`, который содержит значения 1, 2 и 3. Затем у нас есть функция-преобразователь `transform`, которая принимает каждый элемент и возвращает внутренний Observable `inner$`, содержащий преобразованные значения (в данном случае, умноженные на 2).
+
+С помощью оператора `mergeMap` мы применяем функцию-преобразователь к каждому элементу исходного потока и объединяем результаты в один поток данных `result$`.
+
+Результат подписки на `result$` выводится в консоль: 2, 4, 6.
+
+Что происходит за кулисами? Когда каждый элемент проходит через `mergeMap`, он передается в функцию-преобразователь `transform`. Внутри `transform` мы создаем внутренний Observable `inner$`, который эмитит преобразованное значение (в данном случае, значение умноженное на 2). Затем все внутренние Observable объединяются в один поток данных `result$`, который эмитит все значения в порядке их завершения.
+
+Оператор `mergeMap` полезен, когда у вас есть поток данных, и вы хотите применить асинхронное преобразование к каждому элементу, которое может возвращать внутренние Observable. Результаты объединяются в один поток данных, что позволяет эффективно работать с асинхронными операциями и поддерживать порядок элементов.
+
+
+## 92. Оператор `exhaustMap`
+
+`exhaustMap` - это оператор высшего порядка (Higher-Order Observable) в RxJS, который используется для преобразования элементов одного потока данных (Observable) в другой поток данных. Он применяет функцию к каждому элементу и возвращает новый Observable, который игнорирует все внутренние Observable, пока не завершится текущий внутренний Observable.
+
+Давайте разберемся с примером кода и объясним каждую деталь:
+
+```typescript
+import { interval } from 'rxjs';
+import { exhaustMap, take } from 'rxjs/operators';
+
+// Исходный поток данных
+const source$ = interval(1000).pipe(take(3));
+
+// Функция-преобразователь, принимающая элементы и возвращающая внутренний Observable
+const transform = (value: number) => {
+  // Создаем внутренний Observable с таймером
+  const inner$ = interval(500).pipe(take(3));
+  return inner$;
+};
+
+// Применяем exhaustMap для каждого элемента и игнорируем новые внутренние Observable, пока не завершится текущий внутренний Observable
+const result$ = source$.pipe(
+  exhaustMap(transform)
+);
+
+// Подписываемся на результат
+result$.subscribe(result => console.log(result));
+```
+
+В этом примере у нас есть исходный поток данных `source$`, который эмитит значения каждую секунду (0, 1, 2) и завершается после трех значений. Затем у нас есть функция-преобразователь `transform`, которая принимает каждый элемент исходного потока и возвращает внутренний Observable `inner$`, содержащий значения, эмитимые каждые 500 миллисекунды (0, 1, 2) и завершающийся после трех значений.
+
+С помощью оператора `exhaustMap` мы применяем функцию-преобразователь к каждому элементу исходного потока. Однако, если внутренний Observable уже активен (не завершился), новые внутренние Observable игнорируются до тех пор, пока текущий внутренний Observable не завершится. Таким образом, если новое значение приходит, пока предыдущий внутренний Observable все еще активен, оно игнорируется.
+
+Результат подписки на `result$` выводится в консоль: 0, 1, 2.
+
+В данном случае, когда первое значение 0 из исходного потока приходит, `exhaustMap` применяет функцию-преобразователь `transform`, которая создает внутренни
+
+й Observable `inner$`. Этот внутренний Observable эмитит значения 0, 1, 2 каждые 500 миллисекунд. Когда первый внутренний Observable завершается, `exhaustMap` ждет следующего значения из исходного потока и повторяет процесс.
+
+Таким образом, `exhaustMap` позволяет нам контролировать последовательность исходного потока данных и игнорировать новые значения, пока текущий внутренний Observable не завершится.
+
+## 93. Оператор `switchMap` 
+
+`switchMap` - это оператор высшего порядка (Higher-Order Observable) в RxJS, который используется для преобразования элементов одного потока данных (Observable) в другой поток данных. Он применяет функцию к каждому элементу и возвращает новый Observable, отменяя предыдущие внутренние Observable, если новый элемент приходит.
+
+Давайте разберемся с примером кода и объясним каждую деталь:
+
+```typescript
+import { of, interval } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
+
+// Исходный поток данных
+const source$ = interval(1000).pipe(take(3));
+
+// Функция-преобразователь, принимающая элементы и возвращающая внутренний Observable
+const transform = (value: number) => {
+  // Создаем внутренний Observable с таймером
+  const inner$ = interval(500).pipe(take(3));
+  return inner$;
+};
+
+// Применяем switchMap для каждого элемента и отменяем предыдущий внутренний Observable, если новый элемент приходит
+const result$ = source$.pipe(
+  switchMap(transform)
+);
+
+// Подписываемся на результат
+result$.subscribe(result => console.log(result));
+```
+
+В этом примере у нас есть исходный поток данных `source$`, который эмитит значения каждую секунду (0, 1, 2) и завершается после трех значений. Затем у нас есть функция-преобразователь `transform`, которая принимает каждый элемент исходного потока и возвращает внутренний Observable `inner$`, содержащий значения, эмитимые каждые 500 миллисекунд (0, 1, 2) и завершающийся после трех значений.
+
+С помощью оператора `switchMap` мы применяем функцию-преобразователь к каждому элементу исходного потока. Если новое значение приходит, пока предыдущий внутренний Observable все еще активен, `switchMap` отменяет предыдущий внутренний Observable и подписывается на новый внутренний Observable.
+
+Результат подписки на `result$` выводится в консоль: 0, 1, 2, 0, 1, 2.
+
+В данном случае, когда первое значение 0 из исходного потока приходит, `switchMap` применяет функцию-преобразователь `transform`, которая создает внутренний Observable `inner$`. Этот внутренний Observable эмитит значения 0, 1, 2 каждые 500 миллисекунд. Однако, перед тем как эмитить следующее значение 1 из исходного потока, `switchMap` отменяет предыдущий внутренний Observable и подписывается на новый внутренний Observable. Таким образом, мы получаем значения 0, 1, 2, 0, 1, 2 в результате подписки на `result$`.
+
+## 94. Higher-Order Observable
+
+Observable высшего порядка - это Observable, который эмитит значения, являющиеся другими Observable. Он представляет собой поток потоков. Это мощный концепт, который позволяет работать с вложенными структурами данных и управлять последовательностями событий на разных уровнях.
+
+Давайте рассмотрим пример кода и по шагам разберем его детали:
+
+```typescript
+import { of, interval } from 'rxjs';
+import { mergeMap, take } from 'rxjs/operators';
+
+// Внешний Observable
+const source$ = of(1, 2, 3);
+
+// Функция-преобразователь, принимающая значения внешнего Observable и возвращающая внутренний Observable
+const transform = (value: number) => {
+  // Создаем внутренний Observable
+  const inner$ = interval(1000).pipe(take(3));
+  return inner$;
+};
+
+// Применяем mergeMap для каждого значения внешнего Observable и объединяем внутренние Observable
+const result$ = source$.pipe(
+  mergeMap(transform)
+);
+
+// Подписываемся на результат
+result$.subscribe(result => console.log(result));
+```
+
+В этом примере у нас есть внешний Observable `source$`, который эмитит значения 1, 2, 3. Затем у нас есть функция-преобразователь `transform`, которая принимает каждое значение внешнего Observable и возвращает внутренний Observable `inner$`, эмитящий значения каждую секунду (0, 1, 2) и завершающийся после трех значений.
+
+С помощью оператора `mergeMap` (также известного как `flatMap`) мы применяем функцию-преобразователь к каждому значению внешнего Observable. Каждое значение преобразуется во внутренний Observable, и все внутренние Observable объединяются в единый поток.
+
+Результат подписки на `result$` выводится в консоль: 0, 1, 2, 0, 1, 2, 0, 1, 2.
+
+В данном случае, когда первое значение 1 из внешнего Observable приходит, `mergeMap` применяет функцию-преобразователь `transform`, которая создает внутренний Observable `inner$`. Этот внутренний Observable эмитит значения 0, 1, 2 каждую секунду. Затем, когда второе значение 2 приходит, `mergeMap` создает новый внутренний Observable `inner$` и так далее.
+
+Таким образом, мы получаем последовательность значений из внешнего Observable и всех внутренних Observable.
+
+Observable высшего порядка предоставляют мощный инструмент для работы с вложенными структурами данных и событиями на разных уровнях. Они часто используются для работы с асинхронными операциями, такими как HTTP-запросы, и для обработки потоков данных с различными уровнями вложенности.
+
+## 95. Оператор `distintUntillChange` 
+
+Оператор `distinctUntilChanged` позволяет фильтровать последовательность значений Observable и эмитить только уникальные значения. Он игнорирует повторяющиеся значения, эмитируя только те, которые отличаются от предыдущего эмита.
+
+Давайте рассмотрим пример кода и разберем его шаг за шагом:
+
+```typescript
+import { of } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
+
+// Создаем Observable, который эмитит значения
+const source$ = of(1, 1, 2, 2, 3, 1, 4, 4, 5);
+
+// Применяем оператор distinctUntilChanged
+const result$ = source$.pipe(distinctUntilChanged());
+
+// Подписываемся на результат
+result$.subscribe(result => console.log(result));
+```
+
+В этом примере у нас есть Observable `source$`, который эмитит значения 1, 1, 2, 2, 3, 1, 4, 4, 5. Мы применяем оператор `distinctUntilChanged` к этому Observable.
+
+Результатом подписки на `result$` будет вывод уникальных значений: 1, 2, 3, 1, 4, 5.
+
+Оператор `distinctUntilChanged` сравнивает текущее значение со значением, которое было эмитировано предыдущими эмитами. Если значения совпадают, то оно игнорируется и не эмитится в итоговый поток. Только когда значение отличается от предыдущего, оно будет эмитировано в итоговый поток.
+
+В нашем примере, когда первое значение 1 приходит, оно эмитируется. Затем, когда второе значение также равно 1, оно игнорируется. Затем, когда приходит значение 2, оно эмитируется, так как отличается от предыдущего значения 1. И так далее.
+
+Оператор `distinctUntilChanged` полезен, когда вам нужно получить только уникальные значения из Observable и игнорировать повторяющиеся значения.
+
+## 96. Оператор `tap` 
+
+Оператор `tap` является "сайд-эффектным" оператором, который позволяет выполнить действие при каждом эмите значения в Observable без его изменения. Он полезен для отладки, логирования или выполнения любых других побочных действий, которые не влияют на саму последовательность значений.
+
+Давайте рассмотрим пример кода и разберем его шаг за шагом:
+
+```typescript
+import { of } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+// Создаем Observable, который эмитит значения
+const source$ = of(1, 2, 3, 4, 5);
+
+// Применяем оператор tap для выполнения побочного действия
+const result$ = source$.pipe(
+  tap(value => console.log(`Эмит значения: ${value}`))
+);
+
+// Подписываемся на результат
+result$.subscribe();
+```
+
+В этом примере у нас есть Observable `source$`, который эмитит значения 1, 2, 3, 4, 5. Мы применяем оператор `tap` к этому Observable.
+
+Внутри оператора `tap` мы указываем функцию обратного вызова, которая выполняется при каждом эмите значения. В нашем случае, мы просто выводим в консоль информацию о значении, используя `console.log`.
+
+Когда мы подписываемся на `result$`, оператор `tap` будет выполнять указанное побочное действие (вывод в консоль) при каждом эмите значения из `source$`. В результате в консоль будет выведена следующая информация:
+
+```
+Эмит значения: 1
+Эмит значения: 2
+Эмит значения: 3
+Эмит значения: 4
+Эмит значения: 5
+```
+
+Оператор `tap` полезен для отладки и понимания того, что происходит внутри Observable. Вы можете использовать его для логирования значений, отправки аналитических событий или выполнения других побочных действий без изменения самой последовательности значений.
+
+Важно отметить, что оператор `tap` не изменяет значения в Observable и не влияет на последующие операторы в цепочке. Он просто выполняет побочное действие и передает значения дальше по цепочке без изменений.
+
+## 97. Service State Managment в Angular
+
+Service State Management (управление состоянием через сервисы) в Angular представляет собой подход к управлению состоянием приложения с использованием сервисов. Он позволяет централизованно хранить и обновлять данные приложения, делая их доступными для различных компонентов и модулей.
+
+Давайте рассмотрим шаги по созданию простого примера Service State Management в Angular:
+
+Шаг 1: Создание сервиса состояния
+Сначала создадим сервис состояния, который будет хранить и обновлять состояние приложения. Для этого мы создадим новый файл `state.service.ts` и определим в нем наш сервис:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class StateService {
+  private _state = new BehaviorSubject<string>('');
+
+  get state$() {
+    return this._state.asObservable();
+  }
+
+  updateState(newState: string) {
+    this._state.next(newState);
+  }
+}
+```
+
+Здесь мы создаем класс `StateService` с использованием декоратора `Injectable`, чтобы сделать его инъектируемым в другие компоненты. Внутри класса мы создаем приватное поле `_state`, которое является экземпляром `BehaviorSubject`. `BehaviorSubject` является специальным типом Observable, который хранит последнее значение и эмитит его новым подписчикам. Мы также создаем геттер `state$`, который возвращает Observable, основанный на `_state`.
+
+Метод `updateState` позволяет обновлять состояние путем вызова `next` на `_state` и передачи нового значения.
+
+Шаг 2: Использование сервиса состояния в компонентах
+Теперь давайте рассмотрим пример использования нашего сервиса состояния в компонентах.
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { StateService } from './state.service';
+
+@Component({
+  selector: 'app-my-component',
+  template: `
+    <h1>{{ currentState }}</h1>
+    <button (click)="updateState()">Обновить состояние</button>
+  `
+})
+export class MyComponent implements OnInit {
+  currentState: string;
+
+  constructor(private stateService: StateService) { }
+
+  ngOnInit() {
+    this.stateService.state$.subscribe(newState => {
+      this.currentState = newState;
+    });
+  }
+
+  updateState() {
+    this.stateService.updateState('Новое состояние');
+  }
+}
+```
+
+В этом примере у нас есть компонент `MyComponent`, который использует сервис состояния `StateService`. В шаблоне компонента мы отображаем текущее состояние из сервиса и имеем кнопку для обновления состояния.
+
+В методе `ngOnInit` мы подписываемся на Observable `state$` из сервиса состояния. Когда новое состояние эмитится, мы обновляем свойство `currentState` в компоненте, что приводит к автоматическому обновлению шаблона и отображению нового состояния.
+
+Метод `updateState` вызывает метод `updateState` в сервисе состояния, передавая новое состояние для обновления.
+
+Шаг 3: Инжектирование сервиса состояния
+Для использования нашего сервиса состояния в приложении необходимо его инжектировать. Для этого мы должны добавить его в список провайдеров в модуле или использовать декоратор `providedIn: 'root'`, как мы сделали в сервисе состояния.
+
+Например, в модуле `app.module.ts`:
+
+```typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { StateService } from './state.service';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule],
+  providers: [StateService],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+В этом примере мы добавляем `StateService` в список провайдеров модуля, чтобы он был доступен для инжектирования в компонентах.
+
+Вот и все! Мы создали простой пример Service State Management в Angular. Сервис состояния хранит и обновляет состояние, а компоненты подписываются на это состояние и отображают его в шаблонах.
+
+Service State Management является мощным подходом к управлению состоянием в Angular, который позволяет изолировать и централизованно управлять состоянием приложения. Это особенно полезно при разработке приложений большого масштаба с множеством компонентов, которым требуется обмениваться данными.
+
+Надеюсь, этот развернутый ответ помог вам понять Service State Management в Angular. Если у вас возникнут еще вопросы, не стесняйтесь задавать!
+
+## 98. Zone.js в Angular
+
+Zone.js - это библиотека, которая используется в Angular для обнаружения и перехвата асинхронных операций, таких как обработка событий, таймеры, запросы на сервер и другие. Она позволяет Angular отслеживать и управлять зонами выполнения (execution zones), что помогает в обнаружении изменений и обновлении представления.
+
+Давайте рассмотрим шаги по использованию Zone.js в Angular:
+
+Шаг 1: Установка Zone.js
+Первым шагом является установка Zone.js. Вы можете установить его с помощью пакетного менеджера npm, выполнив следующую команду:
+
+```
+npm install zone.js
+```
+
+Шаг 2: Импорт Zone.js
+Затем вам нужно импортировать Zone.js в вашем проекте Angular. Обычно это делается в файле `polyfills.ts`, который находится в корневой папке проекта. Убедитесь, что у вас есть следующий импорт в этом файле:
+
+```typescript
+import 'zone.js/dist/zone';
+```
+
+Шаг 3: Автоматическое выполнение зон
+После импорта Zone.js Angular будет автоматически выполнять ваш код в зоне, что позволяет обнаруживать и перехватывать асинхронные операции. Например, когда происходит обработка события или выполнение асинхронного кода, Angular будет обнаруживать эти изменения и запускать процесс обновления представления.
+
+Zone.js также предоставляет механизмы для создания и встраивания собственных зон выполнения, что позволяет контролировать выполнение кода внутри определенной зоны.
+
+Вот простой пример кода, чтобы продемонстрировать, как Zone.js работает в Angular:
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-my-component',
+  template: `
+    <button (click)="startAsyncTask()">Выполнить асинхронную задачу</button>
+  `
+})
+export class MyComponent {
+  startAsyncTask() {
+    setTimeout(() => {
+      console.log('Асинхронная задача выполнена');
+    }, 2000);
+  }
+}
+```
+
+В этом примере у нас есть компонент `MyComponent` с кнопкой, которая запускает асинхронную задачу с помощью `setTimeout`. Когда задача завершается, мы просто выводим сообщение в консоль.
+
+Зона выполнения, созданная Zone.js, автоматически обнаруживает асинхронное выполнение задачи и синхронизирует обновление представления после ее завершения.
+
+Zone.js играет важную роль в механизмах обнаружения изменений и обновления представления в Angular. Она обеспечивает синхронизацию выполнения асинхронного кода и обновление представления, что позволяет Angular работать эффективно и предоставлять плавное пользовательское взаимодействие.
+
+Надеюсь, этот ответ помог вам понять, как работает Zone.js в Angular. Если у вас возникнут еще вопросы, не стесняйтесь задавать!
+
+## 99. Как работает Zone.js под капотом в Angular
+
+Zone.js - это библиотека, которая предоставляет механизмы для обнаружения и перехвата асинхронных операций в JavaScript. В контексте Angular, Zone.js играет важную роль в механизмах обнаружения изменений и обновления представления.
+
+Давайте рассмотрим, как Zone.js работает под капотом в Angular:
+
+1. Создание зоны выполнения:
+При запуске приложения Angular создает корневую зону выполнения (root zone), которая оборачивает все асинхронные операции. Каждая зона выполнения представляет собой дерево, где корневая зона является родительской для всех других зон.
+
+1. Обнаружение асинхронных операций:
+Когда происходит асинхронная операция, такая как обработка события, таймер или HTTP-запрос, Zone.js перехватывает эту операцию и создает новую зону выполнения, которая становится текущей активной зоной. Это позволяет Zone.js отслеживать асинхронное выполнение кода и его завершение.
+
+1. Регистрация обработчиков:
+Zone.js позволяет регистрировать обработчики событий, которые срабатывают при различных этапах выполнения асинхронного кода. Например, вы можете зарегистрировать обработчик, который будет вызван перед запуском асинхронной операции, после ее завершения или при возникновении ошибки.
+
+1. Внедрение в Angular:
+Angular использует Zone.js для обнаружения изменений в приложении и обновления представления. Когда происходит асинхронная операция, Zone.js оповещает Angular о возможных изменениях, и Angular запускает процесс обновления представления только для необходимых компонентов.
+
+Ниже приведен пример кода, демонстрирующий, как работает Zone.js под капотом в Angular:
+
+```typescript
+import { Component, NgZone } from '@angular/core';
+
+@Component({
+  selector: 'app-my-component',
+  template: `
+    <button (click)="startAsyncTask()">Выполнить асинхронную задачу</button>
+  `
+})
+export class MyComponent {
+  constructor(private ngZone: NgZone) {}
+
+  startAsyncTask() {
+    this.ngZone.run(() => {
+      setTimeout(() => {
+        console.log('Асинхронная задача выполнена');
+      }, 2000);
+    });
+  }
+}
+```
+
+В этом примере мы используем `NgZone`, предоставляемый Angular, чтобы запустить нашу асинхронную задачу в зоне выполнения. Когда `setTimeout` выполняется, Zone.js перехватывает операцию и оповещает Angular о возможных изменениях.
+
+Надеюсь, этот ответ помог вам понять, как работает Zone.js под капотом в Angular. Если у вас возникнут еще вопросы, не стесняйтесь задавать!
+
+## 100. Разница между Angular и React в контексте MVC (Model-View-Controller)
+
+Рассмотрим разницу между Angular и React в контексте MVC (Model-View-Controller).
+
+1. Архитектурный подход:
+   - Angular: Angular предлагает полноценный MVC-фреймворк, где разработчикам предлагается использовать готовые инструменты и практики для организации кода по моделям, представлениям и контроллерам. Angular предоставляет строгую структуру и механизмы для связывания данных между компонентами.
+   - React: React не предписывает конкретную архитектуру, включая MVC. Он является либо библиотекой для построения пользовательских интерфейсов, либо частью шаблона проектирования Flux, который предоставляет альтернативный подход к организации кода.
+
+2. Компонентная модель:
+   - Angular: Angular базируется на компонентах, которые являются основными строительными блоками приложения. Компоненты в Angular объединяют в себе представление (шаблон), логику и стили. Они являются самостоятельными и переиспользуемыми элементами, имеющими свою внутреннюю структуру и связи с другими компонентами.
+   - React: React также основан на компонентах, но они более гибкие и модульные. В React компоненты фокусируются на отображении пользовательского интерфейса и обновлении только необходимых частей при изменении данных. Однако React не имеет встроенной концепции контроллеров или моделей.
+
+3. Управление состоянием:
+   - Angular: В Angular для управления состоянием приложения используется встроенный механизм под названием "ServiceStateManagement". С помощью сервисов и инъекций зависимостей разработчики могут создавать службы, которые хранят состояние приложения и обеспечивают его синхронизацию между компонентами.
+   - React: В React для управления состоянием используется библиотека Redux или встроенный хук `useState`. Redux предоставляет единое хранилище состояния приложения, которое обновляется через диспетчеризацию действий. Хук `useState` позволяет локально управлять состоянием внутри компонента.
+
+4. Язык программирования:
+   - Angular: Angular разрабатывается на языке TypeScript, который является строго типизированным и предоставляет мощные инструменты для разработки приложений с использованием MVC-подхода.
+   - React: React разрабатывается на языке JavaScript, и он может быть использован с использованием стандартного JavaScript или расширений, таких как TypeScript.
+
+В итоге, Angular и React предлагают различные подходы к организации кода в контексте MVC. Angular предоставляет полноценный фреймворк с встроенной структурой MVC, в то время как React более гибкий и модульный, позволяя разработчикам выбирать архитектурные подходы, такие как Flux или другие библиотеки для управления состоянием. Выбор между Angular и React зависит от конкретных требований проекта и предпочтений разработчика.
+
+## 101. Разница между Angular и Vue
+
+Разница между Angular и Vue состоит в нескольких ключевых аспектах. Давайте рассмотрим их подробнее:
+
+1. Размер и сложность:
+   - Angular: Angular является полноценным фреймворком, который предоставляет множество встроенных функций и инструментов. Он имеет больший размер и сложность по сравнению с Vue.
+   - Vue: Vue, с другой стороны, является более легковесным и простым в использовании фреймворком. Он имеет меньший размер и позволяет постепенное внедрение (incremental adoption), что означает, что вы можете использовать Vue постепенно в существующем проекте, не переписывая всю кодовую базу.
+
+2. Язык программирования:
+   - Angular: Angular разрабатывается на TypeScript, строго типизированном языке программирования, который расширяет JavaScript, добавляя типы и другие функции. TypeScript предоставляет дополнительные возможности для статической проверки типов и инструменты разработки.
+   - Vue: Vue может быть использован как с обычным JavaScript, так и с TypeScript. Вы можете выбрать язык программирования, который предпочитаете.
+
+3. Архитектурный подход:
+   - Angular: Angular предлагает полноценный MVC-фреймворк, где модель, представление и контроллеры объединены в компонентах. Angular имеет строгую структуру и подход к организации кода.
+   - Vue: Vue предлагает более гибкий подход к организации кода. Он использует концепцию компонентов и предоставляет простой и интуитивно понятный API для создания компонентов и связывания данных.
+
+4. Экосистема и сообщество:
+   - Angular: Angular имеет большую экосистему и активное сообщество разработчиков. Он поддерживается Google и имеет обширную документацию, руководства и ресурсы для обучения.
+   - Vue: Vue также имеет активное сообщество и экосистему, но меньше по сравнению с Angular. Однако Vue быстро набирает популярность и получает все больше поддержки.
+
+5. Синтаксис и подход к разработке:
+   - Angular: Angular использует декларативный синтаксис с использованием директив и шаблонов. Разработчики могут создавать шаблоны, в которых определяются структура и поведение компонентов.
+   - Vue: Vue использует комбинированный синтаксис, который объединяет HTML-подобные шаблоны, JavaScript и CSS в одном файле компонента. Это делает разработку более интуитивной и понятной.
+
+Пример кода с использованием Angular:
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-counter',
+  template: `
+    <div>
+      <h1>Counter: {{ count }}</h1>
+      <button (click)="increment()">Increment</button>
+    </div>
+  `
+})
+export class CounterComponent {
+  count = 0;
+
+  increment() {
+    this.count++;
+  }
+}
+```
+
+Пример кода с использованием Vue:
+
+```html
+<template>
+  <div>
+    <h1>Counter: {{ count }}</h1>
+    <button @click="increment">Increment</button>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      count: 0
+    };
+  },
+  methods: {
+    increment() {
+      this.count++;
+    }
+  }
+};
+</script>
+```
+
+В итоге, разница между Angular и Vue заключается в размере, сложности, языке программирования, архитектурном подходе, экосистеме и синтаксисе. Выбор между ними зависит от ваших предпочтений, требований проекта и опыта разработчика. Оба фреймворка популярны и имеют свои преимущества, поэтому выбор зависит от конкретной ситуации.
+
+## 102. Оператор `concat` 
+
+Оператор `concat` в RxJS используется для объединения нескольких последовательностей (Observable) в одну последовательность. Он создает новый Observable, который будет последовательно испускать значения из первой последовательности, затем из второй и так далее до завершения всех последовательностей.
+
+Давайте рассмотрим шаги и примеры кода для лучшего понимания оператора `concat`:
+
+Шаг 1: Импорт оператора `concat` и необходимых функций из библиотеки RxJS:
+
+```typescript
+import { concat, of } from 'rxjs';
+```
+
+Шаг 2: Создание нескольких Observable последовательностей, которые мы хотим объединить:
+
+```typescript
+const source1$ = of(1, 2, 3);
+const source2$ = of(4, 5, 6);
+const source3$ = of(7, 8, 9);
+```
+
+Шаг 3: Использование оператора `concat` для объединения последовательностей:
+
+```typescript
+const result$ = concat(source1$, source2$, source3$);
+```
+
+Шаг 4: Подписка на объединенную последовательность и обработка ее значений:
+
+```typescript
+result$.subscribe(value => console.log(value));
+```
+
+В результате выполнения этого кода мы получим следующий вывод:
+
+```
+1
+2
+3
+4
+5
+6
+7
+8
+9
+```
+
+Объяснение: Оператор `concat` объединяет последовательности в том порядке, в котором они передаются ему в качестве аргументов. Он ожидает завершения текущей последовательности, прежде чем перейти к следующей. Таким образом, значения испускаются поочередно из каждой последовательности, сохраняя их порядок.
+
+Важно отметить, что оператор `concat` будет ожидать завершения каждой последовательности, прежде чем начать испускать значения из следующей. Если какая-либо последовательность не завершается, объединение не продолжится дальше этой последовательности.
+
+Также стоит отметить, что оператор `concat` сохраняет порядок последовательностей, поэтому значения из второй последовательности не начнут испускаться до завершения первой, и так далее.
+
+Надеюсь, эта информация помогла вам понять оператор `concat` в RxJS.
+
+## 103. Оператор `scan`
+
+Оператор `scan` в RxJS используется для последовательного преобразования значений последовательности (Observable) на основе некоторой аккумулирующей функции и начального значения. Он похож на оператор `reduce` в JavaScript, но в отличие от `reduce`, `scan` испускает каждое промежуточное значение в процессе сканирования.
+
+Давайте рассмотрим шаги и примеры кода для лучшего понимания оператора `scan`:
+
+Шаг 1: Импорт оператора `scan` и необходимых функций из библиотеки RxJS:
+
+```typescript
+import { scan } from 'rxjs/operators';
+import { of } from 'rxjs';
+```
+
+Шаг 2: Создание Observable последовательности, для которой мы хотим использовать оператор `scan`:
+
+```typescript
+const source$ = of(1, 2, 3, 4, 5);
+```
+
+Шаг 3: Использование оператора `scan` для преобразования значений последовательности:
+
+```typescript
+const result$ = source$.pipe(
+  scan((acc, curr) => acc + curr, 0)
+);
+```
+
+Шаг 4: Подписка на результирующую последовательность и обработка ее значений:
+
+```typescript
+result$.subscribe(value => console.log(value));
+```
+
+В результате выполнения этого кода мы получим следующий вывод:
+
+```
+1
+3
+6
+10
+15
+```
+
+Объяснение: Оператор `scan` последовательно применяет аккумулирующую функцию к значениям последовательности, сохраняя промежуточные результаты. В нашем примере, аккумулирующая функция `(acc, curr) => acc + curr` складывает текущее значение `curr` со значением аккумулятора `acc`. Начальное значение аккумулятора устанавливается равным 0. Каждый раз, когда поступает новое значение, оператор `scan` испускает текущий результат сканирования. 
+
+Таким образом, наша последовательность [1, 2, 3, 4, 5] преобразуется в последовательность промежуточных значений [1, 3, 6, 10, 15], которые выводятся в консоль.
+
+## 104. Оператор `startWith` 
+
+Оператор `startWith` в RxJS используется для добавления начального значения в последовательность (Observable) перед тем, как она начнет испускать свои обычные значения. Этот оператор полезен, когда вам нужно включить предопределенное значение в начале последовательности, например, для инициализации или установки значений по умолчанию.
+
+Давайте рассмотрим шаги и примеры кода для лучшего понимания оператора `startWith`:
+
+Шаг 1: Импорт оператора `startWith` и необходимых функций из библиотеки RxJS:
+
+```typescript
+import { startWith } from 'rxjs/operators';
+import { of } from 'rxjs';
+```
+
+Шаг 2: Создание Observable последовательности, для которой мы хотим использовать оператор `startWith`:
+
+```typescript
+const source$ = of(2, 3, 4, 5);
+```
+
+Шаг 3: Использование оператора `startWith` для добавления начального значения в последовательность:
+
+```typescript
+const result$ = source$.pipe(
+  startWith(1)
+);
+```
+
+Шаг 4: Подписка на результирующую последовательность и обработка ее значений:
+
+```typescript
+result$.subscribe(value => console.log(value));
+```
+
+В результате выполнения этого кода мы получим следующий вывод:
+
+```
+1
+2
+3
+4
+5
+```
+
+Объяснение: Оператор `startWith` добавляет значение 1 в начало последовательности. Таким образом, когда мы подписываемся на результирующую последовательность, мы сначала получаем начальное значение 1, а затем продолжаем получать остальные значения из исходной последовательности [2, 3, 4, 5].
+
+Оператор `startWith` также позволяет добавлять несколько начальных значений путем передачи их как аргументов. Например:
+
+```typescript
+const result$ = source$.pipe(
+  startWith(1, 0)
+);
+
+result$.subscribe(value => console.log(value));
+```
+
+В этом случае мы добавляем два начальных значения 1 и 0. Вывод будет следующим:
+
+```
+1
+0
+2
+3
+4
+5
+```
+
+Таким образом, оператор `startWith` предоставляет возможность добавлять начальные значения в последовательность и управлять инициализацией или установкой значений по умолчанию.
+
+## 105. Оператор `withLatestFrom`
+
+Оператор `withLatestFrom` в RxJS используется для комбинирования значений из основного Observable и других Observable в сочетании с последним значением каждого из них. Этот оператор полезен, когда вам нужно получить доступ к последнему значению одного или нескольких Observable и объединить его с основным Observable для создания нового значения.
+
+Давайте рассмотрим шаги и примеры кода для лучшего понимания оператора `withLatestFrom`:
+
+Шаг 1: Импорт оператора `withLatestFrom` и необходимых функций из библиотеки RxJS:
+
+```typescript
+import { withLatestFrom } from 'rxjs/operators';
+import { of } from 'rxjs';
+```
+
+Шаг 2: Создание основного Observable и другого Observable, с которыми мы хотим объединить значения:
+
+```typescript
+const source$ = of(1, 2, 3, 4, 5);
+const second$ = of('A', 'B', 'C', 'D', 'E');
+```
+
+Шаг 3: Использование оператора `withLatestFrom` для комбинирования значений:
+
+```typescript
+const result$ = source$.pipe(
+  withLatestFrom(second$)
+);
+```
+
+Шаг 4: Подписка на результирующий Observable и обработка его значений:
+
+```typescript
+result$.subscribe(([sourceValue, secondValue]) => console.log(sourceValue, secondValue));
+```
+
+В результате выполнения этого кода мы получим следующий вывод:
+
+```
+1 A
+2 B
+3 C
+4 D
+5 E
+```
+
+Объяснение: Оператор `withLatestFrom` объединяет значения из основного Observable `source$` и другого Observable `second$`. Когда мы подписываемся на результирующий Observable, для каждого значения из основного Observable `source$`, мы получаем последнее значение из другого Observable `second$` в сочетании с ним.
+
+В приведенном примере, для каждого значения из `source$` (1, 2, 3, 4, 5), мы получаем последнее значение из `second$` (A, B, C, D, E) и выводим их вместе.
+
+Оператор `withLatestFrom` также может принимать несколько Observable в качестве аргументов. Например:
+
+```typescript
+const third$ = of(true, false, true, false, true);
+
+const result$ = source$.pipe(
+  withLatestFrom(second$, third$)
+);
+
+result$.subscribe(([sourceValue, secondValue, thirdValue]) => console.log(sourceValue, secondValue, thirdValue));
+```
+
+В этом случае мы объединяем значения из трех Observable. Вывод будет следующим:
+
+```
+1 A true
+2 B false
+3 C true
+4 D false
+5 E true
+```
+
+Таким образом, оператор `withLatestFrom` позволяет комбинировать значения из основного Observable и других Observable, используя последнее значение каждого из них для создания нового значения. Это полезный оператор для синхронизации и комбинирования данных из разных источников.
+
+## 106. Оператор `ajax`
+
+Оператор `ajax` в RxJS используется для создания Observable, который отправляет HTTP-запросы и получает ответы с помощью объекта XMLHttpRequest или XHR в браузере или Node.js. Он предоставляет удобный способ работы с AJAX-запросами внутри потоков RxJS.
+
+Давайте рассмотрим шаги и примеры кода для лучшего понимания оператора `ajax`:
+
+Шаг 1: Импорт необходимых функций и операторов из библиотеки RxJS:
+
+```typescript
+import { ajax } from 'rxjs/ajax';
+```
+
+Шаг 2: Создание Observable с помощью оператора `ajax` и отправка HTTP-запроса:
+
+```typescript
+const apiUrl = 'https://api.example.com/data';
+
+const request$ = ajax.getJSON(apiUrl);
+```
+
+В этом примере мы используем метод `getJSON` оператора `ajax` для отправки GET-запроса по указанному URL. Оператор `ajax` автоматически создает объект XMLHttpRequest, отправляет запрос на указанный URL и получает ответ в виде JSON.
+
+Шаг 3: Подписка на Observable и обработка полученных данных:
+
+```typescript
+request$.subscribe(
+  (data) => console.log('Success:', data),
+  (error) => console.log('Error:', error)
+);
+```
+
+В этом примере мы подписываемся на Observable `request$` и обрабатываем полученные данные. В случае успешного запроса, мы выводим данные в консоль. В случае ошибки, мы выводим сообщение об ошибке.
+
+Объяснение: Оператор `ajax` позволяет нам создавать Observable для отправки различных типов запросов (GET, POST, PUT, DELETE и т. д.) и получения ответов. Он выполняет все необходимые шаги для создания и отправки HTTP-запроса, включая обработку заголовков, параметров запроса и сериализацию данных.
+
+В качестве альтернативы оператору `ajax`, вы также можете использовать функцию `ajax` напрямую:
+
+```typescript
+import { ajax } from 'rxjs/ajax';
+
+const apiUrl = 'https://api.example.com/data';
+
+ajax({
+  url: apiUrl,
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer token'
+  }
+}).subscribe(
+  (data) => console.log('Success:', data),
+  (error) => console.log('Error:', error)
+);
+```
+
+Здесь мы используем функцию `ajax` и передаем объект с настройками запроса, такими как URL, метод, заголовки и другие параметры. Подписка и обработка данных происходят так же, как и в предыдущем примере.
+
+Оператор `ajax` является удобным инструментом для работы с HTTP-запросами в потоках RxJS. Он обеспечивает асинхронную обработку запросов и управление полученными данными в функциональном стиле.
+
+## 107. Оператор `debounceTime` 
+
+Оператор `debounceTime` в RxJS используется для задержки передачи элементов Observable на определенное время после последнего события. Он позволяет игнорировать события, которые происходят слишком часто, и передавать только последнее событие после указанной задержки.
+
+Давайте рассмотрим шаги и примеры кода для лучшего понимания оператора `debounceTime`:
+
+Шаг 1: Импорт необходимых функций и операторов из библиотеки RxJS:
+
+```typescript
+import { of } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+```
+
+Шаг 2: Создание Observable и применение оператора `debounceTime`:
+
+```typescript
+const source$ = of(1, 2, 3, 4, 5);
+
+const debounced$ = source$.pipe(debounceTime(1000));
+```
+
+В этом примере мы создаем Observable `source$`, который испускает значения 1, 2, 3, 4, 5. Затем мы применяем оператор `debounceTime(1000)` к `source$`, что означает, что мы хотим игнорировать события, которые происходят в течение 1 секунды после последнего события.
+
+Шаг 3: Подписка на Observable и обработка полученных данных:
+
+```typescript
+debounced$.subscribe((value) => console.log(value));
+```
+
+В этом примере мы подписываемся на Observable `debounced$` и выводим полученные значения в консоль. Значения будут выводиться только после 1 секунды без новых событий.
+
+Объяснение: Оператор `debounceTime` позволяет управлять потоком данных путем задержки передачи элементов на определенное время после последнего события. Если в течение указанного времени происходит новое событие, таймер сбрасывается и ожидание начинается заново. Только после того, как прошло достаточно времени без новых событий, последнее событие будет передано.
+
+Оператор `debounceTime` полезен, когда нужно обрабатывать события, которые происходят слишком часто, и передавать только последнее актуальное событие. Это может быть полезно, например, при работе с поисковыми запросами или обработке пользовательского ввода, чтобы избежать избыточных обращений к серверу или ненужной обработки данных.
+
+Важно отметить, что оператор `debounceTime` применяется к каждому элементу входящего потока отдельно. Это значит, что каждый элемент будет задерживаться независимо от других элементов. Если вам нужно применить задержку к последовательности в целом, а не к каждому элементу отдельно, вы можете использовать оператор `debounce` вместо `debounceTime`.
+
+## 108. Оператор `share` 
+
+Оператор `share` в RxJS используется для создания "разделяемого" Observable, который предоставляет одну и ту же последовательность значений для всех своих подписчиков. Он позволяет избежать повторного выполнения источника данных для каждой подписки и обеспечивает совместное использование результатов вычислений.
+
+Давайте рассмотрим шаги и примеры кода для лучшего понимания оператора `share`:
+
+Шаг 1: Импорт необходимых функций и операторов из библиотеки RxJS:
+
+```typescript
+import { of } from 'rxjs';
+import { tap, map, share } from 'rxjs/operators';
+```
+
+Шаг 2: Создание источника данных (Observable) и применение оператора `share`:
+
+```typescript
+const source$ = of(1, 2, 3).pipe(
+  tap((value) => console.log('Исходное значение:', value)),
+  map((value) => value * 2),
+  share()
+);
+```
+
+В этом примере мы создаем источник данных `source$`, который испускает значения 1, 2, 3. Затем мы применяем операторы `tap` и `map` для преобразования значений и отладочного вывода. Наконец, мы применяем оператор `share`, который делает `source$` разделяемым, чтобы его можно было подписываться несколько раз, но выполнение источника данных происходило только один раз.
+
+Шаг 3: Подписка на разделяемый Observable:
+
+```typescript
+source$.subscribe((value) => console.log('Подписка 1:', value));
+
+source$.subscribe((value) => console.log('Подписка 2:', value));
+```
+
+В этом примере мы подписываемся на `source$` два раза, и каждая подписка выводит полученные значения в консоль.
+
+Объяснение: Оператор `share` создает разделяемый Observable, который предоставляет одну и ту же последовательность значений для всех подписчиков. Когда первый подписчик подписывается на разделяемый Observable, он начинает выполнение источника данных и получает все значения. При подписке последующих подписчиков на тот же разделяемый Observable, они не запускают выполнение источника данных заново, а сразу получают уже существующие значения. Это позволяет сэкономить ресурсы и избежать повторных вычислений.
+
+Оператор `share` можно использовать, когда необходимо совместно использовать результаты вычислений или когда источник данных является "горячим" (hot) и должен быть доступен для нескольких подписчиков.
+
+Важно отметить, что оператор `share` сохраняет одну общую подписку на источник данных. Если все подписки на разделяемый Observable отменены, выполнение источника данных также будет остановлено. Если необходимо продолжить выполнение источника данных даже без активных подписчиков, можно использовать оператор `shareReplay`.
+
+## 109. Оператор `shareReplay`
+
+Оператор `shareReplay` в RxJS используется для создания разделяемого и повторяемого Observable. Он выполняет две основные функции: совместное использование значений между подписчиками и повторное выполнение источника данных для новых подписчиков. Это полезно, когда требуется получить последние значения из источника данных, даже если подписчик подписывается позднее.
+
+Давайте рассмотрим шаги и примеры кода для лучшего понимания оператора `shareReplay`:
+
+Шаг 1: Импорт необходимых функций и операторов из библиотеки RxJS:
+
+```typescript
+import { of } from 'rxjs';
+import { tap, map, shareReplay } from 'rxjs/operators';
+```
+
+Шаг 2: Создание источника данных (Observable) и применение оператора `shareReplay`:
+
+```typescript
+const source$ = of(1, 2, 3).pipe(
+  tap((value) => console.log('Исходное значение:', value)),
+  map((value) => value * 2),
+  shareReplay(1)
+);
+```
+
+В этом примере мы создаем источник данных `source$`, который испускает значения 1, 2, 3. Затем мы применяем операторы `tap` и `map` для преобразования значений и отладочного вывода. Наконец, мы применяем оператор `shareReplay(1)`, который делает `source$` разделяемым и повторяемым, сохраняя последнее значение и повторно выполняя источник данных для новых подписчиков.
+
+Шаг 3: Подписка на разделяемый и повторяемый Observable:
+
+```typescript
+source$.subscribe((value) => console.log('Подписка 1:', value));
+
+source$.subscribe((value) => console.log('Подписка 2:', value));
+```
+
+В этом примере мы подписываемся на `source$` два раза, и каждая подписка выводит полученные значения в консоль.
+
+Объяснение: Оператор `shareReplay` создает разделяемый и повторяемый Observable, который предоставляет одну и ту же последовательность значений для всех подписчиков и сохраняет последнее значение. Когда первый подписчик подписывается на разделяемый Observable, он начинает выполнение источника данных и получает все значения. Если новый подписчик подписывается позже, он сразу получает последнее сохраненное значение источника данных и затем продолжает получать последующие значения. Это позволяет новым подписчикам получать последние значения даже после того, как эти значения уже были испущены.
+
+Оператор `shareReplay` принимает аргумент, который указывает количество последних значений, которые нужно сохранять для новых подписчиков. В нашем примере мы передаем аргумент `1`, что означает, что будет сохраняться только последнее значение.
+
+## 110. Оператор `bufferTime` 
+
+Оператор `bufferTime` в RxJS используется для сбора значений из источника данных в течение определенного временного интервала и создания нового массива со собранными значениями. Этот оператор особенно полезен, когда вам нужно группировать значения и обрабатывать их пакетами вместо индивидуальных значений. Давайте рассмотрим подробности и примеры кода для лучшего понимания оператора `bufferTime`:
+
+Шаг 1: Импортируем необходимые функции и операторы из библиотеки RxJS:
+
+```typescript
+import { interval } from 'rxjs';
+import { bufferTime } from 'rxjs/operators';
+```
+
+Шаг 2: Создаем источник данных (Observable) с использованием `interval`:
+
+```typescript
+const source$ = interval(1000);
+```
+
+В этом примере мы создаем источник данных `source$`, который испускает значения каждую секунду.
+
+Шаг 3: Применяем оператор `bufferTime` для сбора значений в течение определенного временного интервала:
+
+```typescript
+const buffered$ = source$.pipe(bufferTime(3000));
+```
+
+В этом примере мы применяем оператор `bufferTime(3000)`, который собирает значения из `source$` в течение 3 секунд. Как только проходит 3 секунды, создается новый массив со собранными значениями и передается в новый Observable `buffered$`.
+
+Шаг 4: Подписываемся на новый Observable и выводим собранные значения в консоль:
+
+```typescript
+buffered$.subscribe((values) => console.log('Собранные значения:', values));
+```
+
+В этом примере мы подписываемся на `buffered$` и выводим собранные значения в консоль каждый раз, когда проходит 3 секунды и создается новый массив со собранными значениями.
+
+Объяснение: Оператор `bufferTime` собирает значения из источника данных в течение заданного временного интервала и создает новый массив со собранными значениями. По истечении каждого временного интервала создается новый массив, и предыдущий массив собранных значений передается дальше. Если в течение временного интервала не было значений, в массиве будет передан пустой массив. Это позволяет группировать значения и обрабатывать их пакетами, что может быть полезно для агрегирования данных или выполнения операций над пакетами значений.
+
+
+
+
