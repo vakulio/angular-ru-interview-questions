@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Жизненные циклы компонентов в Angular: - Little Angular programmer&#x27;s library</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../main.html"><strong aria-hidden="true">1.</strong> Оглавление</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../angular.html"><strong aria-hidden="true">1.1.</strong> Angular</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../angular/Что_такое_Angular.html"><strong aria-hidden="true">1.1.1.</strong> Что такое Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Разница_между_AngularJS_и_Angular.html"><strong aria-hidden="true">1.1.2.</strong> Разница между AngularJS и Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Методы_жизненного_цикла_Angular_компонента.html"><strong aria-hidden="true">1.1.3.</strong> Методы жизненного цикла Angular компонента?</a></li><li class="chapter-item expanded "><a href="../angular/Разница_между_`constructor`_и_`ngOnInit`.html"><strong aria-hidden="true">1.1.4.</strong> Разница между constructor и ngOnInit?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_Data_Binding_в_Angular.html"><strong aria-hidden="true">1.1.5.</strong> Что такое Data Binding в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Разница_между_AOT_и_JIT.html"><strong aria-hidden="true">1.1.6.</strong> Разница между AOT и JIT?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_Change_Detection,_как_работает_механизм_Change_Detection.html"><strong aria-hidden="true">1.1.7.</strong> Что такое Change Detection, как работает механизм Change Detection?</a></li><li class="chapter-item expanded "><a href="../angular/Cтратегии_обнаружения_изменений_в_Angular.html"><strong aria-hidden="true">1.1.8.</strong> Cтратегии обнаружения изменений в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_декораторы_в_TypeScript.html"><strong aria-hidden="true">1.1.9.</strong> Что такое декораторы в TypeScript?</a></li><li class="chapter-item expanded "><a href="../angular/Назовите_плюсы_использования_Angular.html"><strong aria-hidden="true">1.1.10.</strong> Назовите плюсы использования Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Назовите_минусы_использования_Angular.html"><strong aria-hidden="true">1.1.11.</strong> Назовите минусы использования Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_внедрение_зависимостей_в_Angular.html"><strong aria-hidden="true">1.1.12.</strong> Что такое внедрение зависимостей в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_директивы_в_Angular.html"><strong aria-hidden="true">1.1.13.</strong> Что такое директивы в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Для_чего_нужны_директивы_ng-template.html"><strong aria-hidden="true">1.1.14.</strong> Для чего нужны директивы &lt;ng-template&gt;, &lt;ng-container&gt;, &lt;ng-content&gt; и &lt;ng-template-outlet&gt;?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_динамические_компоненты_в_Angular.html"><strong aria-hidden="true">1.1.15.</strong> Что такое динамические компоненты в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Назовите_последовательность_действий_для_отображения_динамического_компонента.html"><strong aria-hidden="true">1.1.16.</strong> Назовите последовательность действий для отображения динамического компонента?</a></li><li class="chapter-item expanded "><a href="../angular/Основные_формы_привязки_данных_в_Angular.html"><strong aria-hidden="true">1.1.17.</strong> Основные формы привязки данных в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Типы_стратегий_загрузки_в_Angular.html"><strong aria-hidden="true">1.1.18.</strong> Типы стратегий загрузки в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_роутинг_и_как_его_создать_в_Angular.html"><strong aria-hidden="true">1.1.19.</strong> Что такое роутинг и как его создать в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_интерполяция_в_Angular.html"><strong aria-hidden="true">1.1.20.</strong> Что такое интерполяция в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Жизненный_цикл_в_Angular_Router.html"><strong aria-hidden="true">1.1.21.</strong> Жизненный цикл в Angular Router?</a></li><li class="chapter-item expanded "><a href="../angular/Разница_между_`RouterModule.forRoot()`_и_`RouterModule.forChild()`.html"><strong aria-hidden="true">1.1.22.</strong> Разница между RouterModule.forRoot() и RouterModule.forChild()?</a></li><li class="chapter-item expanded "><a href="../angular/Когда_нужно_использовать_ngrx.html"><strong aria-hidden="true">1.1.23.</strong> Когда нужно использовать ngrx/store?</a></li><li class="chapter-item expanded "><a href="../angular/Разница_между_умным_и_презентационным_компонентами.html"><strong aria-hidden="true">1.1.24.</strong> Разница между умным и презентационным компонентами?</a></li><li class="chapter-item expanded "><a href="../angular/Разница_между_`@ViewChild()`_и_`@ContentChild()`.html"><strong aria-hidden="true">1.1.25.</strong> Разница между @ViewChild() и @ContentChild()?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_template_variable_Как_ее_использовать.html"><strong aria-hidden="true">1.1.26.</strong> Что такое template variable? Как ее использовать?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_View_Encapsulation.html"><strong aria-hidden="true">1.1.27.</strong> Что такое View Encapsulation?</a></li><li class="chapter-item expanded "><a href="../angular/Как_можно_хранить_данные_в_Angular.html"><strong aria-hidden="true">1.1.28.</strong> Как можно хранить данные в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Когда_нужно_использовать_стандартные_(template_driven),_а_когда_реактивные_(reactive)_формы.html"><strong aria-hidden="true">1.1.29.</strong> Когда нужно использовать стандартные (template driven), а когда реактивные (reactive) формы?</a></li><li class="chapter-item expanded "><a href="../angular/Как_внедрить_сервис_в_Angular_приложе.html"><strong aria-hidden="true">1.1.30.</strong> Как внедрить сервис в Angular приложение?</a></li><li class="chapter-item expanded "><a href="../angular/Как_улучшить_производительность_Angular_приложения.html"><strong aria-hidden="true">1.1.31.</strong> Как улучшить производительность Angular приложения?</a></li><li class="chapter-item expanded "><a href="../angular/Разница_между_компонентом_и_модулем_в_Angular.html"><strong aria-hidden="true">1.1.32.</strong> Разница между компонентом и модулем в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Как_защитить_компонент_активируемый_через_роутер.html"><strong aria-hidden="true">1.1.33.</strong> Как защитить компонент активируемый через роутер?</a></li><li class="chapter-item expanded "><a href="../angular/Разница_между_`Promise`_и_`Observable`_в_Angular.html"><strong aria-hidden="true">1.1.34.</strong> Разница между Promise и Observable в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Разница_между_`declarations`,_`providers`_и_`import`_в_NgModule.html"><strong aria-hidden="true">1.1.35.</strong> Разница между declarations, providers и import в NgModule?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_реактивное_программирование_Как_оно_используется_в_Angular.html"><strong aria-hidden="true">1.1.36.</strong> Что такое реактивное программирование? Как оно используется в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Лучшие_практики_безопасности_в_Angular.html"><strong aria-hidden="true">1.1.37.</strong> Лучшие практики безопасности в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Приведите_хороший_пример_использования_`NgZone`_сервиса.html"><strong aria-hidden="true">1.1.38.</strong> Приведите хороший пример использования NgZone сервиса?</a></li><li class="chapter-item expanded "><a href="../angular/Как_сделать_компонент_для_показа_сообщений_об_ошибках.html"><strong aria-hidden="true">1.1.39.</strong> Как сделать компонент для показа сообщений об ошибках?</a></li><li class="chapter-item expanded "><a href="../angular/Как_передать_данные_из_дочернего_компонента_в_родительский.html"><strong aria-hidden="true">1.1.40.</strong> Как передать данные из дочернего компонента в родительский?</a></li><li class="chapter-item expanded "><a href="../angular/Разница_между_`NgForm`,_`FormGroup`,_и_`FormControl`.html"><strong aria-hidden="true">1.1.41.</strong> Разница между NgForm, FormGroup, и FormControl?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_Shared_модуль.html"><strong aria-hidden="true">1.1.42.</strong> Что такое Shared модуль?</a></li><li class="chapter-item expanded "><a href="../angular/Почему_импортировать_сервис_из_SharedModule_в_lazy_loaded_модуль_считается_плохой_практикой.html"><strong aria-hidden="true">1.1.43.</strong> Почему импортировать сервис из SharedModule в lazy loaded модуль считается плохой практикой?</a></li><li class="chapter-item expanded "><a href="../angular/Принцип_работы_`ChangeDetectionStrategy.onPush`.html"><strong aria-hidden="true">1.1.44.</strong> Принцип работы ChangeDetectionStrategy.onPush?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_пайп_(`pipe`)_в_Angular_Разница_между_чистыми_и_нечистыми_пайпами.html"><strong aria-hidden="true">1.1.45.</strong> Что такое пайп (pipe) в Angular? Разница между чистыми и нечистыми пайпами?</a></li><li class="chapter-item expanded "><a href="../angular/Назовите_ключевые_компоненты_Angular.html"><strong aria-hidden="true">1.1.46.</strong> Назовите ключевые компоненты Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Разница_между_компонентом_и_директивой.html"><strong aria-hidden="true">1.1.47.</strong> Разница между компонентом и директивой?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_`HttpClient`,_перечислите_его_преимущества.html"><strong aria-hidden="true">1.1.48.</strong> Что такое HttpClient, перечислите его преимущества?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_пользовательский_элемент_(Custom_Element)_Как_он_работает.html"><strong aria-hidden="true">1.1.49.</strong> Что такое пользовательский элемент (Custom Element)? Как он работает?</a></li><li class="chapter-item expanded "><a href="../angular/Как_трансформировать_Angular-компоненты_в_пользовательские_элементы.html"><strong aria-hidden="true">1.1.50.</strong> Как трансформировать Angular-компоненты в пользовательские элементы?</a></li><li class="chapter-item expanded "><a href="../angular/Назовите_преимущества_AOT_компиляции.html"><strong aria-hidden="true">1.1.51.</strong> Назовите преимущества AOT компиляции?</a></li><li class="chapter-item expanded "><a href="../angular/Преимущества_использования_сервис-воркеров_в_Angular_приложении.html"><strong aria-hidden="true">1.1.52.</strong> Преимущества использования сервис-воркеров в Angular приложении?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_платформа_в_Angular.html"><strong aria-hidden="true">1.1.53.</strong> Что такое платформа в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Для_чего_используется_связка_`ngFor`_и_`trackBy`.html"><strong aria-hidden="true">1.1.54.</strong> Для чего используется связка ngFor и trackBy?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_SPA.html"><strong aria-hidden="true">1.1.55.</strong> Что такое SPA?</a></li><li class="chapter-item expanded "><a href="../angular/Каковы_плюсы_и_минусы_Angular_по_сравнению_с_React.html"><strong aria-hidden="true">1.1.56.</strong> Каковы плюсы и минусы Angular по сравнению с React?</a></li><li class="chapter-item expanded "><a href="../angular/Отписка_в_Angular_-_почему_это_важно.html"><strong aria-hidden="true">1.1.57.</strong> Отписка в Angular - почему это важно?</a></li><li class="chapter-item expanded "><a href="../angular/Как_обработать_ошибку_AsyncPipe_в_Angular.html"><strong aria-hidden="true">1.1.58.</strong> Как обработать ошибку AsyncPipe в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Как_создать_в_Angular_анимации.html"><strong aria-hidden="true">1.1.59.</strong> Как создать в Angular анимации?</a></li><li class="chapter-item expanded "><a href="../angular/Как_используется_ключевое_слово_`as`_в_Angular.html"><strong aria-hidden="true">1.1.60.</strong> Как используется ключевое слово as в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_Angular_Ivy.html"><strong aria-hidden="true">1.1.61.</strong> Что такое Angular Ivy?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_Angular_interceptor(перехватчик).html"><strong aria-hidden="true">1.1.62.</strong> Что такое Angular interceptor(перехватчик)?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_Angular_generator_(генератор_Angular).html"><strong aria-hidden="true">1.1.63.</strong> Что такое Angular generator (генератор Angular)?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_SSR_в_Angular_или_Service_Side_Rendering.html"><strong aria-hidden="true">1.1.64.</strong> Что такое SSR в Angular или Service Side Rendering?</a></li><li class="chapter-item expanded "><a href="../angular/Как_пофиксить_ошибку_`Angular_input_has_no_initializer`.html"><strong aria-hidden="true">1.1.65.</strong> Как пофиксить ошибку Angular input has no initializer?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_Angular_proxy_и_как_его_настроить.html"><strong aria-hidden="true">1.1.66.</strong> Что такое Angular proxy и как его настроить?</a></li><li class="chapter-item expanded "><a href="../angular/Жизненные_циклы_компонентов_в_Angular.html" class="active"><strong aria-hidden="true">1.1.67.</strong> Жизненные циклы компонентов в Angular:</a></li><li class="chapter-item expanded "><a href="../angular/SOLID_принципы_в_контексте_Angular.html"><strong aria-hidden="true">1.1.68.</strong> SOLID принципы в контексте Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_модификатор_`static`декораторa_@ViewChild.html"><strong aria-hidden="true">1.1.69.</strong> Что такое модификатор staticдекораторa @ViewChild?</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_директива_`ng-content`_с_атрибутом__select_.html"><strong aria-hidden="true">1.1.70.</strong> Что такое директива ng-content с атрибутом select?</a></li><li class="chapter-item expanded "><a href="../angular/Методы_отключения_зоны_(zone)_и_управления_обнаружением_изменений_(change_detection)_в_компонентах._`runOutsideAngular`_и_`detach`_в_сочетании_с_`reattach`..html"><strong aria-hidden="true">1.1.71.</strong> Методы отключения зоны (zone) и управления обнаружением изменений (change detection) в компонентах. runOutsideAngular и detach в сочетании с reattach.</a></li><li class="chapter-item expanded "><a href="../angular/Что_такое_Иерархические_инжекторы_(Hierarchical_Injectors).html"><strong aria-hidden="true">1.1.72.</strong> Что такое Иерархические инжекторы (Hierarchical Injectors)?</a></li><li class="chapter-item expanded "><a href="../angular/Различные_типы_Иерархии_инжекторов_в_Angular.html"><strong aria-hidden="true">1.1.73.</strong> Различные типы Иерархии инжекторов в Angular?</a></li><li class="chapter-item expanded "><a href="../angular/Resolution_modifiers_в_Angular.html"><strong aria-hidden="true">1.1.74.</strong> Resolution modifiers в Angular</a></li><li class="chapter-item expanded "><a href="../angular/Injector_trees_(деревья_инжекторов)_в_Angular.html"><strong aria-hidden="true">1.1.75.</strong> Injector trees (деревья инжекторов) в Angular</a></li><li class="chapter-item expanded "><a href="../angular/markForCheck_и_detectChanges.html"><strong aria-hidden="true">1.1.76.</strong> markForCheck и detectChanges</a></li><li class="chapter-item expanded "><a href="../angular/Tree_shaking_и_зависимости.html"><strong aria-hidden="true">1.1.77.</strong> Tree shaking и зависимости</a></li><li class="chapter-item expanded "><a href="../angular/Нужен_ли_символ_в_структурных_директивах.html"><strong aria-hidden="true">1.1.78.</strong> Нужен ли символ * в структурных директивах?</a></li><li class="chapter-item expanded "><a href="../angular/Service_State_Managment_в_Angular.html"><strong aria-hidden="true">1.1.79.</strong> Service State Managment в Angular</a></li><li class="chapter-item expanded "><a href="../angular/Zone.js_в_Angular.html"><strong aria-hidden="true">1.1.80.</strong> Zone.js в Angular</a></li><li class="chapter-item expanded "><a href="../angular/Как_работает_Zone.js_под_капотом_в_Angular.html"><strong aria-hidden="true">1.1.81.</strong> Как работает Zone.js под капотом в Angular</a></li><li class="chapter-item expanded "><a href="../angular/Разница_между_Angular_и_React_в_контексте_MVC_(Model-View-Controller).html"><strong aria-hidden="true">1.1.82.</strong> Разница между Angular и React в контексте MVC (Model-View-Controller)</a></li><li class="chapter-item expanded "><a href="../angular/Разница_между_Angular_и_Vue.html"><strong aria-hidden="true">1.1.83.</strong> Разница между Angular и Vue</a></li></ol></li><li class="chapter-item expanded "><a href="../RxJS.html"><strong aria-hidden="true">1.2.</strong> RxJS</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rxjs/Какие_преимущества_и_недостатки_RxJS.html"><strong aria-hidden="true">1.2.1.</strong> Какие преимущества и недостатки RxJS</a></li><li class="chapter-item expanded "><a href="../rxjs/Холодные_и_горячие_Observables_-_в_чем_разница.html"><strong aria-hidden="true">1.2.2.</strong> Холодные и горячие Observables - в чем разница?</a></li><li class="chapter-item expanded "><a href="../rxjs/Higher-Order_Observable.html"><strong aria-hidden="true">1.2.3.</strong> Higher-Order Observable</a></li><li class="chapter-item expanded "><a href="../rxjs/Как_добавить_обработку_ошибок_в_RxJS.html"><strong aria-hidden="true">1.2.4.</strong> Как добавить обработку ошибок в RxJS</a></li><li class="chapter-item expanded "><a href="../rxjs/Отписки_от_подписок_на_Observable._Оператор_`takeUntil`_и_другие_способы.html"><strong aria-hidden="true">1.2.5.</strong> Отписки от подписок на Observable. Оператор takeUntil и другие способы</a></li><li class="chapter-item expanded "><a href="../rxjs/Разница_между_`BehaviorSubject`_и_`Observable`.html"><strong aria-hidden="true">1.2.6.</strong> Разница между BehaviorSubject и Observable</a></li><li class="chapter-item expanded "><a href="../rxjs/Разница_между_`BehaviorSubject`,_`ReplaySubject`_и_`AsyncSubject`.html"><strong aria-hidden="true">1.2.7.</strong> Разница между BehaviorSubject, ReplaySubject и AsyncSubject</a></li><li class="chapter-item expanded "><a href="../rxjs/ConcatMap_vs_SwitchMap_vs_MergeMap_vs_Map_vs_ExhaustMap_в_RxJS.html"><strong aria-hidden="true">1.2.8.</strong> ConcatMap vs SwitchMap vs MergeMap vs Map vs ExhaustMap в RxJS</a></li><li class="chapter-item expanded "><a href="../rxjs/Разница_между_`switchMap`,_`concatMap`_и_`mergeMap`.html"><strong aria-hidden="true">1.2.9.</strong> Разница между switchMap, concatMap и mergeMap</a></li><li class="chapter-item expanded "><a href="../rxjs/Что_делает_оператор_`combineLatest`_в_RxJS.html"><strong aria-hidden="true">1.2.10.</strong> Что делает оператор combineLatest в RxJS</a></li><li class="chapter-item expanded "><a href="../rxjs/Оператор_`ajax`.html"><strong aria-hidden="true">1.2.11.</strong> Оператор ajax</a></li><li class="chapter-item expanded "><a href="../rxjs/Оператор_`bufferTime`.html"><strong aria-hidden="true">1.2.12.</strong> Оператор bufferTime</a></li><li class="chapter-item expanded "><a href="../rxjs/Оператор_`concat`.html"><strong aria-hidden="true">1.2.13.</strong> Оператор concat</a></li><li class="chapter-item expanded "><a href="../rxjs/Оператор_`debounceTime`.html"><strong aria-hidden="true">1.2.14.</strong> Оператор debounceTime</a></li><li class="chapter-item expanded "><a href="../rxjs/Оператор_`distintUntillChange`.html"><strong aria-hidden="true">1.2.15.</strong> Оператор distintUntillChange</a></li><li class="chapter-item expanded "><a href="../rxjs/Оператор_`exhaustMap`.html"><strong aria-hidden="true">1.2.16.</strong> Оператор exhaustMap</a></li><li class="chapter-item expanded "><a href="../rxjs/Оператор_`mergeMap`.html"><strong aria-hidden="true">1.2.17.</strong> Оператор mergeMap</a></li><li class="chapter-item expanded "><a href="../rxjs/Оператор_`debounceTime`.html"><strong aria-hidden="true">1.2.18.</strong> Оператор debounceTime</a></li><li class="chapter-item expanded "><a href="../rxjs/Оператор_`scan`.html"><strong aria-hidden="true">1.2.19.</strong> Оператор scan</a></li><li class="chapter-item expanded "><a href="../rxjs/Оператор_`share`.html"><strong aria-hidden="true">1.2.20.</strong> Оператор share</a></li><li class="chapter-item expanded "><a href="../rxjs/Оператор_`shareReplay`.html"><strong aria-hidden="true">1.2.21.</strong> Оператор shareReplay</a></li><li class="chapter-item expanded "><a href="../rxjs/Оператор_`startWith`.html"><strong aria-hidden="true">1.2.22.</strong> Оператор startWith</a></li><li class="chapter-item expanded "><a href="../rxjs/Оператор_`switchMap`.html"><strong aria-hidden="true">1.2.23.</strong> Оператор switchMap</a></li><li class="chapter-item expanded "><a href="../rxjs/Оператор_`tap`.html"><strong aria-hidden="true">1.2.24.</strong> Оператор tap</a></li><li class="chapter-item expanded "><a href="../rxjs/Оператор_`withLatestFrom`.html"><strong aria-hidden="true">1.2.25.</strong> Оператор withLatestFrom</a></li><li class="chapter-item expanded "><a href="../rxjs/Операторы_`forkJoin`_vs._`merge`.html"><strong aria-hidden="true">1.2.26.</strong> Операторы forkJoin vs. merge</a></li><li class="chapter-item expanded "><a href="../rxjs/Операторы_`from`_и_`of`.html"><strong aria-hidden="true">1.2.27.</strong> Операторы from и of</a></li><li class="chapter-item expanded "><a href="../rxjs/Популярные_операторы_в_RxJs.html"><strong aria-hidden="true">1.2.28.</strong> Популярные операторы в RxJs</a></li></ol></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Little Angular programmer&#x27;s library</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="Жизненные-циклы-компонентов-в-angular"><a class="header" href="#Жизненные-циклы-компонентов-в-angular">Жизненные циклы компонентов в Angular</a></h2>
+<p>Таблица, содержащая информацию о жизненных циклах компонентов в Angular:</p>
+<div class="table-wrapper"><table><thead><tr><th>Жизненный цикл</th><th>Описание</th><th>Методы</th></tr></thead><tbody>
+<tr><td><code>ngOnChanges</code></td><td>Вызывается, когда Angular обнаруживает изменения во входных свойствах компонента.</td><td><code>ngOnChanges(changes: SimpleChanges) { ... }</code></td></tr>
+<tr><td><code>ngOnInit</code></td><td>Вызывается после установки входных свойств компонента и инициализации директив.</td><td><code>ngOnInit() { ... }</code></td></tr>
+<tr><td><code>ngDoCheck</code></td><td>Вызывается при каждом изменении в компоненте или его дочерних компонентах.</td><td><code>ngDoCheck() { ... }</code></td></tr>
+<tr><td><code>ngAfterContentInit</code></td><td>Вызывается после того, как Angular вставляет внешний контент в представление компонента.</td><td><code>ngAfterContentInit() { ... }</code></td></tr>
+<tr><td><code>ngAfterContentChecked</code></td><td>Вызывается после проверки содержимого компонента и его дочерних компонентов.</td><td><code>ngAfterContentChecked() { ... }</code></td></tr>
+<tr><td><code>ngAfterViewInit</code></td><td>Вызывается после инициализации представления компонента и его дочерних представлений.</td><td><code>ngAfterViewInit() { ... }</code></td></tr>
+<tr><td><code>ngAfterViewChecked</code></td><td>Вызывается после проверки представления компонента и его дочерних представлений.</td><td><code>ngAfterViewChecked() { ... }</code></td></tr>
+<tr><td><code>ngOnDestroy</code></td><td>Вызывается перед уничтожением компонента.</td><td><code>ngOnDestroy() { ... }</code></td></tr>
+</tbody></table>
+</div>
+<p>Это только некоторые из методов жизненного цикла компонентов в Angular. Каждый метод выполняет определенные действия на определенном этапе жизненного цикла компонента. Вы можете использовать эти методы для выполнения специфических действий, таких как инициализация данных, подписка на Observable, очистка ресурсов и многое другое.</p>
+<p>Обратите внимание, что некоторые из этих методов являются опциональными и могут не использоваться в каждом компоненте. Выбор методов жизненного цикла зависит от конкретной задачи и требований вашего приложения.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../angular/Что_такое_Angular_proxy_и_как_его_настроить.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../angular/SOLID_принципы_в_контексте_Angular.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../angular/Что_такое_Angular_proxy_и_как_его_настроить.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../angular/SOLID_принципы_в_контексте_Angular.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

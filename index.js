@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const filename = 'README.md';  // Имя вашего исходного файла
-const outputFolder = 'output_folder';  // Имя папки для сохранения отдельных файлов
+const outputFolder = 'many_books';  // Имя папки для сохранения отдельных файлов
 
 // Создание папки для сохранения отдельных файлов
 if (!fs.existsSync(outputFolder)) {
@@ -19,9 +19,11 @@ fs.readFile(filename, 'utf8', (err, data) => {
     // Обработка каждого раздела и сохранение в отдельный файл
     sections.slice(1).forEach((section, index) => {
         section = section.trim();  // Удаление пробелов и переводов строк в начале и конце раздела
-        const outputFilename = `${outputFolder}/section_${index + 1}.md`;
+        const lines = section.split('\n');  // Разделение раздела на строки
+        const firstLine = replaceSpacesDigitsAndQuestionMark(lines[0].trim());  // Получение первой строки и удаление пробелов в начале и конце
+        const outputFilename = `${outputFolder}/${firstLine}.md`;
 
-        fs.writeFile(outputFilename, '##' + section, 'utf8', (err) => {
+        fs.writeFile(outputFilename, '## ' + section, 'utf8', (err) => {
             if (err) {
                 console.error(err);
                 return;
@@ -30,3 +32,7 @@ fs.readFile(filename, 'utf8', (err, data) => {
         });
     });
 });
+
+function replaceSpacesDigitsAndQuestionMark(str) {
+    return str.replace(/ /g, '_').replace(/\d+\./g, '').replace(/\?/g, '');
+}
