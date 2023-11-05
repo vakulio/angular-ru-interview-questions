@@ -113,6 +113,17 @@
 - [108. Оператор `share`](#108-оператор-share)
 - [109. Оператор `shareReplay`](#109-оператор-sharereplay)
 - [110. Оператор `bufferTime`](#110-оператор-buffertime)
+- [111. Что такое `WebSocketSubject`?](#111-что-такое-websocketsubject)
+	- [Пример использования `WebSocketSubject` в Angular:](#пример-использования-websocketsubject-в-angular)
+- [112. Оператор `refCount()`](#112-оператор-refcount)
+	- [Пример использования `refCount`:](#пример-использования-refcount)
+- [113. Оператор `publish()`](#113-оператор-publish)
+	- [Пример использования `publish`:](#пример-использования-publish)
+	- [Пример с автоматическим подключением при первой подписке:](#пример-с-автоматическим-подключением-при-первой-подписке)
+- [114. Операторы `retry()` и `retryWhen()`](#114-операторы-retry-и-retrywhen)
+- [115. Оператор `bufferCount()`](#115-оператор-buffercount)
+- [116. Оператор `sequenceEqual()`](#116-оператор-sequenceequal)
+- [117. Операторы `window()` и `windowTime()`](#117-операторы-window-и-windowtime)
 
 ## 1. Что такое Angular?
 
@@ -6832,5 +6843,533 @@ buffered$.subscribe((values) => console.log('Собранные значения
 Объяснение: Оператор `bufferTime` собирает значения из источника данных в течение заданного временного интервала и создает новый массив со собранными значениями. По истечении каждого временного интервала создается новый массив, и предыдущий массив собранных значений передается дальше. Если в течение временного интервала не было значений, в массиве будет передан пустой массив. Это позволяет группировать значения и обрабатывать их пакетами, что может быть полезно для агрегирования данных или выполнения операций над пакетами значений.
 
 
+## 111. Что такое `WebSocketSubject`?
+
+`WebSocketSubject` — это специализированный тип `Subject` из библиотеки RxJS, который позволяет работать с WebSocket-соединениями. Это часть RxJS, который может быть интегрирован с Angular для создания реактивных приложений.
+
+`WebSocketSubject` облегчает отправку и прием сообщений через WebSocket, автоматически обрабатывая создание соединения и его переподключение в случае ошибок или закрытия. Он объединяет в себе как Observable, так и Observer, позволяя одновременно подписываться на входящие сообщения и отправлять исходящие.
+
+### Пример использования `WebSocketSubject` в Angular:
+
+Для начала необходимо установить пакет RxJS, если он еще не установлен:
+
+```bash
+npm install rxjs
+```
+
+Использование `WebSocketSubject` может выглядеть следующим образом:
+
+```typescript
+import { WebSocketSubject } from 'rxjs/webSocket';
+
+// Создаем экземпляр WebSocketSubject
+const myWebSocket: WebSocketSubject<any> = new WebSocketSubject('ws://your-websocket-url');
+
+// Подписываемся на сообщения
+const messagesSubscription = myWebSocket.subscribe(
+  (message) => {
+    console.log('Получено сообщение:', message);
+  },
+  (err) => {
+    console.error('Ошибка:', err);
+  },
+  () => {
+    console.log('Поток закрыт');
+  }
+);
+
+// Отправка сообщения
+myWebSocket.next({ action: 'someAction', data: 'someData' });
+
+// При необходимости отписка
+messagesSubscription.unsubscribe();
+
+// Закрытие WebSocket соединения
+myWebSocket.complete();
+```
+
+Давайте рассмотрим более подробный пример, который можно интегрировать в Angular-сервис:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { WebSocketSubject } from 'rxjs/webSocket';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class WebsocketService {
+  private socket$: WebSocketSubject<any>;
+
+  constructor() {
+    // Инициализация WebSocketSubject
+    this.socket$ = new WebSocketSubject('ws://your-websocket-url');
+  }
+
+  // Получение Observable для подписки на входящие сообщения
+  public get messages$(): Observable<any> {
+    return this.socket$.asObservable();
+  }
+
+  // Метод для отправки сообщений
+  public sendMessage(msg: any): void {
+    this.socket$.next(msg);
+  }
+
+  // Метод для закрытия соединения
+  public closeConnection(): void {
+    this.socket$.complete();
+  }
+}
+```
+
+Использование сервиса в компоненте Angular:
+
+```typescript
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { WebsocketService } from './websocket.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit, OnDestroy {
+  private messagesSubscription: Subscription;
+
+  constructor(private websocketService: WebsocketService) {}
+
+  ngOnInit() {
+    this.messagesSubscription = this.websocketService.messages$.subscribe(
+      (message) => console.log('Получено сообщение:', message),
+      (error) => console.error('WebSocket ошибка:', error)
+    );
+  }
+
+  sendMessage() {
+    this.websocketService.sendMessage({ action: 'send', data: 'Привет, WebSocket!' });
+  }
+
+  ngOnDestroy() {
+    // Убедитесь, что подписка будет отменена при уничтожении компонента
+    if (this.messagesSubscription) {
+      this.messagesSubscription.unsubscribe();
+    }
+    // Закрыть соединение при выходе
+    this.websocketService.closeConnection();
+  }
+}
+```
+
+В этом примере `WebsocketService` предоставляет методы для подписки на сообщения, отправки сообщений и закрытия WebSocket-соединения. Компонент `AppComponent` использует этот сервис для общения с WebSocket сервером.
 
 
+## 112. Оператор `refCount()`
+
+`refCount()` – это оператор в библиотеке RxJS, который используется совместно с оператором `share` или как часть оператора `shareReplay` для управления подписками на Observable. Этот оператор поддерживает подсчет активных подписок на Observable и автоматически начинает и останавливает выполнение Observable, когда количество подписчиков изменяется с 0 до 1 или с 1 до 0 соответственно.
+
+Когда вы создаете Observable, который делает что-то вроде запроса к серверу или слушает события веб-сокетов, вы обычно не хотите, чтобы этот Observable выполнялся, если у него нет подписчиков. Вот здесь и пригождается `refCount`.
+
+### Пример использования `refCount`:
+
+Допустим, у вас есть Observable, который делает HTTP-запрос. Вы хотите, чтобы запрос совершался только тогда, когда у Observable есть хотя бы один подписчик, и чтобы запрос автоматически отменялся, если у него не останется подписчиков.
+
+```typescript
+import { Observable } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
+import { share, refCount } from 'rxjs/operators';
+
+// Создаем Observable для HTTP-запроса
+const httpRequest$ = ajax.getJSON('https://api.example.com/data').pipe(
+  // Применяем share для разделения одного источника данных между подписчиками
+  share(),
+  // refCount начнет выполнение запроса, когда подписчиков будет более 0, и остановит, когда они вернутся к 0
+  refCount()
+);
+
+// Функция для подписки и отписки
+function fetchData() {
+  // Подписка на Observable
+  const subscription = httpRequest$.subscribe(
+    data => console.log('Получены данные:', data),
+    err => console.error('Ошибка:', err)
+  );
+
+  // Отписка от Observable после 5 секунд
+  setTimeout(() => {
+    subscription.unsubscribe();
+    console.log('Отписка выполнена.');
+  }, 5000);
+}
+
+// Вызываем функцию, чтобы начать запрос и затем автоматически отписаться
+fetchData();
+```
+
+В этом примере, если вы вызовете `fetchData()` несколько раз с интервалом менее 5 секунд, то запрос к серверу не будет повторяться для каждой подписки; он будет разделяться среди всех подписчиков. Как только последний подписчик отпишется, запрос отменится (если это поддерживается источником Observable).
+
+Обратите внимание, что в более новых версиях RxJS оператор `share()` уже включает в себя функциональность `refCount`, и вам не нужно применять `refCount()` отдельно, если вы используете `share()`. Таким образом, просто использование `share()` будет достаточным для большинства сценариев, когда вы хотите разделять подписку и контролировать выполнение Observable на основе количества подписчиков.
+
+Пример использования с оператором `share()`:
+
+```typescript
+import { ajax } from 'rxjs/ajax';
+import { share } from 'rxjs/operators';
+
+const httpRequest$ = ajax.getJSON('https://api.example.com/data').pipe(
+  share() // Теперь share уже включает в себя refCount
+);
+``` 
+
+Это делает код чище и проще для понимания.
+
+## 113. Оператор `publish()`
+
+Оператор `publish()` в RxJS является разновидностью оператора `multicast()`. Он используется для превращения холодного Observable в горячий, создавая под капотом `Subject`, который будет ретранслировать элементы исходного Observable всем его подписчикам. В отличие от `share()`, который автоматически начинает исходящий поток при первой подписке и заканчивает при отписке последнего подписчика, `publish()` требует явного вызова метода `connect()` для начала испускания элементов.
+
+### Пример использования `publish`:
+
+```typescript
+import { interval } from 'rxjs';
+import { publish, tap } from 'rxjs/operators';
+
+// Создаём холодный Observable, который испускает значения каждую секунду
+const interval$ = interval(1000).pipe(
+  tap(value => console.log(`Испущено значение: ${value}`)), // Добавляем side-effect для логирования
+  publish()
+);
+
+// Подписываемся на Observable
+const subscription1 = interval$.subscribe(value =>
+  console.log(`Подписчик 1: ${value}`)
+);
+const subscription2 = interval$.subscribe(value =>
+  console.log(`Подписчик 2: ${value}`)
+);
+
+// Важно: Observable начинает испускать значения только после вызова connect()
+const connection = interval$.connect(); 
+
+// Отписываемся через 5 секунд
+setTimeout(() => {
+  subscription1.unsubscribe();
+  subscription2.unsubscribe();
+  connection.unsubscribe(); // Это необходимо для остановки испускания значений
+}, 5000);
+```
+
+В этом примере после вызова метода `connect()` Observable `interval$` начнёт испускать значения каждую секунду, и подписчики `subscription1` и `subscription2` будут получать эти значения. Вызов `unsubscribe()` на `connection` прекращает дальнейшую рассылку значений, даже если бы были новые подписчики.
+
+### Пример с автоматическим подключением при первой подписке:
+
+Используя оператор `refCount`, можно автоматически начать испускание элементов при первой подписке и прекратить при отписке последнего подписчика, подобно `share()`.
+
+```typescript
+import { interval } from 'rxjs';
+import { publish, tap, refCount } from 'rxjs/operators';
+
+// Создаём Observable
+const interval$ = interval(1000).pipe(
+  tap(value => console.log(`Испущено значение: ${value}`)),
+  publish(),
+  refCount()
+);
+
+// Подписываемся на Observable
+const subscription1 = interval$.subscribe(value =>
+  console.log(`Подписчик 1: ${value}`)
+);
+
+setTimeout(() => {
+  // Подписываемся на Observable через 3 секунды
+  const subscription2 = interval$.subscribe(value =>
+    console.log(`Подписчик 2: ${value}`)
+  );
+}, 3000);
+
+// Отписываемся через 6 секунд
+setTimeout(() => {
+  subscription1.unsubscribe();
+  console.log('Подписчик 1 отписан');
+}, 6000);
+
+// Отписываемся через 10 секунд
+setTimeout(() => {
+  subscription2.unsubscribe();
+  console.log('Подписчик 2 отписан');
+}, 10000);
+```
+
+Здесь, благодаря оператору `refCount()`, вызов `connect()` не требуется, и если все подписчики отписываются, исходящий поток автоматически останавливается. Когда новый подписчик появляется, поток снова начинает испускать значения.
+
+Важно отметить, что начиная с RxJS версии 6, есть упрощённые операторы, такие как `share()` и `shareReplay()`, которые делают подобные паттерны использования более декларативными и менее подверженными ошибкам за счёт уменьшения необходимости управлять подключением вручную.
+
+## 114. Операторы `retry()` и `retryWhen()`
+
+В RxJS операторы `retry()` и `retryWhen()` используются для повторной попытки подписки на Observable, когда происходит ошибка. Это может быть полезно, например, при работе с сетевыми запросами, когда временные ошибки (как ошибка соединения или ошибка сервера) могут быть разрешены путем повторного выполнения запроса.
+
+**retry()**
+
+Оператор `retry()` принимает один аргумент — количество попыток, которое RxJS должен предпринять перед окончательным выбросом ошибки. Если аргумент не указан, RxJS будет пытаться бесконечно.
+
+**Пример использования `retry`:**
+
+```typescript
+import { of, throwError } from 'rxjs';
+import { mergeMap, retry } from 'rxjs/operators';
+
+// Эмулируем HTTP запрос, который может завершиться ошибкой
+const httpRequest$ = of('url').pipe(
+  mergeMap(url => {
+    // Представим, что каждый второй запрос завершается ошибкой
+    if (Math.random() < 0.5) {
+      return throwError(() => new Error('Сетевая ошибка'));
+    } else {
+      return of(`Данные с ${url}`);
+    }
+  }),
+  retry(2) // Повторяем запрос до двух раз в случае ошибки
+);
+
+httpRequest$.subscribe({
+  next: data => console.log(data),
+  error: err => console.error('Ошибка:', err)
+});
+```
+
+В этом примере `httpRequest$` является Observable, который либо успешно возвращает данные, либо выбрасывает ошибку. Оператор `retry(2)` позволяет повторить запрос до двух раз после возникновения ошибки, прежде чем ошибка будет передана дальше по цепочке операторов.
+
+**retryWhen()**
+
+Оператор `retryWhen()` более гибкий. Он позволяет вам определить логику и условия, при которых необходимо выполнять повторную попытку, используя другой Observable, который определяет когда делать следующую попытку.
+
+**Пример использования `retryWhen`:**
+
+```typescript
+import { of, throwError, timer } from 'rxjs';
+import { mergeMap, retryWhen, delayWhen } from 'rxjs/operators';
+
+const httpRequest$ = of('url').pipe(
+  mergeMap(url => {
+    if (Math.random() < 0.5) {
+      return throwError(() => new Error('Сетевая ошибка'));
+    } else {
+      return of(`Данные с ${url}`);
+    }
+  }),
+  retryWhen(errors =>
+    errors.pipe(
+      // Задерживаем повторную попытку на 1 секунду
+      delayWhen(() => timer(1000))
+    )
+  )
+);
+
+httpRequest$.subscribe({
+  next: data => console.log(data),
+  error: err => console.error('Ошибка:', err)
+});
+```
+
+В этом примере, когда возникает ошибка, мы не сразу её выбрасываем. Вместо этого, мы используем `retryWhen`, чтобы отложить повторную попытку на 1 секунду с помощью `timer`. После истечения времени задержки, исходный Observable будет подписан снова.
+
+Оператор `retryWhen` позволяет реализовывать сложные стратегии повторения, такие как экспоненциальное откатывание, лимитированное количество попыток и так далее. Это делает его мощным инструментом в тех случаях, когда нужно больше контроля над процессом повторения, чем просто заданное количество попыток.
+
+## 115. Оператор `bufferCount()`
+
+Оператор `bufferCount()` в RxJS является оператором буферизации, который собирает значения из Observable источника и группирует их в массивы. Эти массивы испускаются всякий раз, когда накапливается заданное количество элементов или когда исходный Observable завершается.
+
+Оператор `bufferCount()` принимает два параметра:
+1. `bufferSize`: Количество элементов, которое должно быть накоплено перед тем, как буфер будет выведен.
+2. `startBufferEvery` (необязательный): Определяет интервал, с которым будут начинаться новые буферы. Если не указано, новые буферы будут начинаться каждый раз, когда будет выведен предыдущий буфер.
+
+**Пример использования `bufferCount`:**
+
+```typescript
+import { interval } from 'rxjs';
+import { bufferCount } from 'rxjs/operators';
+
+// Создаем Observable, который испускает значение каждую секунду
+const source$ = interval(1000);
+
+// Используем bufferCount для сбора групп из трех последовательных значений
+const buffered$ = source$.pipe(
+  bufferCount(3)
+);
+
+// Подписываемся на результат
+buffered$.subscribe({
+  next: buffer => console.log('Буфер из 3 значений: ', buffer),
+  complete: () => console.log('Завершено')
+});
+
+// Вывод будет выглядеть примерно так:
+// Буфер из 3 значений:  [0, 1, 2]
+// Буфер из 3 значений:  [3, 4, 5]
+// Буфер из 3 значений:  [6, 7, 8]
+// ... и так далее ...
+```
+
+**Пример использования `bufferCount` с параметром `startBufferEvery`:**
+
+```typescript
+import { interval } from 'rxjs';
+import { bufferCount } from 'rxjs/operators';
+
+// Создаем Observable, который испускает значение каждую секунду
+const source$ = interval(1000);
+
+// Используем bufferCount для сбора групп из трех значений, начиная новый буфер каждые два значения
+const buffered$ = source$.pipe(
+  bufferCount(3, 2)
+);
+
+// Подписываемся на результат
+buffered$.subscribe({
+  next: buffer => console.log('Буфер: ', buffer),
+  complete: () => console.log('Завершено')
+});
+
+// Вывод будет выглядеть примерно так:
+// Буфер:  [0, 1, 2]
+// Буфер:  [2, 3, 4]
+// Буфер:  [4, 5, 6]
+// Буфер:  [6, 7, 8]
+// ... и так далее ...
+```
+
+В этом втором примере, хотя буфер все еще собирает группы из трех значений, новый буфер начинается каждые два значения. Это означает, что каждое значение, кроме первого, будет входить в два буфера. Это создает перекрывающиеся буферы, что может быть полезно в определенных сценариях обработки потока данных.
+
+## 116. Оператор `sequenceEqual()`
+
+Оператор `sequenceEqual()` в библиотеке RxJS используется для сравнения порядка и значений двух последовательностей, представленных двумя Observable. Он подписывается на два Observable и сравнивает каждое испускаемое ими значение на равенство. Если все соответствующие элементы равны и последовательности одинаковой длины, результатом будет `true`, в противном случае — `false`.
+
+Важно, что `sequenceEqual()` учитывает порядок элементов: даже если оба Observable испускают одни и те же значения, но в разном порядке, результат будет `false`.
+
+**Пример использования `sequenceEqual`:**
+
+```typescript
+import { of } from 'rxjs';
+import { sequenceEqual } from 'rxjs/operators';
+
+// Создаем два Observable
+const observable1$ = of(1, 2, 3);
+const observable2$ = of(1, 2, 3);
+
+// Используем sequenceEqual для сравнения значений и порядка этих Observable
+const compare$ = observable1$.pipe(
+  sequenceEqual(observable2$)
+);
+
+// Подписываемся на результат сравнения
+compare$.subscribe({
+  next: isEqual => console.log('Последовательности равны:', isEqual),
+  complete: () => console.log('Завершено')
+});
+
+// Вывод:
+// Последовательности равны: true
+// Завершено
+```
+
+В этом примере, так как `observable1$` и `observable2$` испускают одни и те же значения в том же порядке, результат будет `true`.
+
+**Пример, когда последовательности не равны:**
+
+```typescript
+import { of } from 'rxjs';
+import { sequenceEqual } from 'rxjs/operators';
+
+const observable1$ = of(1, 2, 3);
+const observable2$ = of(3, 2, 1);
+
+const compare$ = observable1$.pipe(
+  sequenceEqual(observable2$)
+);
+
+compare$.subscribe({
+  next: isEqual => console.log('Последовательности равны:', isEqual), // false
+  complete: () => console.log('Завершено')
+});
+
+// Вывод:
+// Последовательности равны: false
+// Завершено
+```
+
+Теперь, поскольку значения испускаются в разном порядке, результат будет `false`, даже несмотря на то, что испущенные значения одинаковы.
+
+`sequenceEqual` также поддерживает опциональный аргумент для пользовательской функции сравнения, который можно использовать, если вы хотите определить собственный метод сравнения двух значений.
+
+## 117. Операторы `window()` и `windowTime()`
+
+В RxJS операторы `window` и `windowTime` используются для группировки значений, испускаемых Observable, в Observable "окон". Эти "окна" сами по себе являются Observable, которые испускают значения в определенные временные промежутки или при определенных условиях. Операторы похожи на `buffer` и `bufferTime`, но вместо массивов значений они испускают эти значения как вложенные Observable.
+
+**window()**
+
+Оператор `window` принимает Observable в качестве аргумента, который определяет, когда начинать новое "окно". Каждый раз, когда входной Observable испускает значение, текущее "окно" закрывается (и испускается как Observable), и начинается новое "окно".
+
+**Пример использования `window`:**
+
+```typescript
+import { interval, Subject } from 'rxjs';
+import { window, take, switchMap, toArray } from 'rxjs/operators';
+
+// Создаем Observable, который испускает значение каждые 100 мс
+const source$ = interval(100);
+
+// Создаем Subject, который будет испускать значение каждые 500 мс, определяя новые "окна"
+const windowBoundary$ = new Subject();
+
+setTimeout(() => windowBoundary$.next(), 500);
+setTimeout(() => windowBoundary$.next(), 1000);
+
+const windowed$ = source$.pipe(
+  window(windowBoundary$),
+  take(2), // Берем только первые два "окна"
+  switchMap(windowObservable => windowObservable.pipe(toArray()))
+);
+
+windowed$.subscribe({
+  next: windowValue => console.log('Окно:', windowValue),
+  complete: () => console.log('Завершено')
+});
+
+// Вывод может выглядеть так:
+// Окно: [0, 1, 2, 3, 4]
+// Окно: [5, 6, 7, 8, 9]
+// Завершено
+```
+
+**windowTime()**
+
+Оператор `windowTime` используется для группировки значений исходного Observable в Observable "окна" на основе временных интервалов.
+
+***Пример использования `windowTime`:***
+
+```typescript
+import { interval } from 'rxjs';
+import { windowTime, switchMap, take, toArray } from 'rxjs/operators';
+
+// Создаем Observable, который испускает значение каждые 100 мс
+const source$ = interval(100);
+
+const windowed$ = source$.pipe(
+  windowTime(500), // Задаем временное "окно" в 500 мс
+  take(2), // Берем только первые два "окна"
+  switchMap(windowObservable => windowObservable.pipe(toArray()))
+);
+
+windowed$.subscribe({
+  next: windowValue => console.log('Окно:', windowValue),
+  complete: () => console.log('Завершено')
+});
+
+// Вывод может выглядеть так:
+// Окно: [0, 1, 2, 3, 4]
+// Окно: [5, 6, 7, 8, 9]
+// Завершено
+```
+
+В этом примере, каждые 500 мс, исходный Observable `source$` начинает новое "окно", в котором собираются значения. Каждое "окно" является Observable, который при подписке испускает значения, собранные за этот временной интервал. Эти "окна" испускаются, и их содержимое группируется в массив с помощью `toArray` для удобства отображения.
